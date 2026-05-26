@@ -208,7 +208,7 @@ export default function FilterBar() {
                       'px-2.5 py-1.5 rounded-lg border text-[10px] font-medium transition-all duration-200',
                       active
                         ? 'bg-black text-white border-black'
-                        : 'bg-white text-black/50 border-black/10 hover:bg-black/5 hover:text-black'
+                        : 'bg-white/80 backdrop-blur-sm text-black/50 border-black/10 hover:bg-white/95 hover:text-black'
                     )}
                   >
                     {dist === 'Out of Town / Delivery' ? 'Виїзд по місту' : dist}

@@ -56,7 +56,7 @@ function AppShell() {
   const showChrome = !isHome || heroExpanded;
 
   return (
-    <div className="min-h-screen bg-white font-body flex flex-col">
+    <div className="min-h-screen font-body flex flex-col">
       <PageBackground />
       {showChrome && <Header />}
       <main className={showChrome ? 'flex-1 pb-20' : 'flex-1'}>
