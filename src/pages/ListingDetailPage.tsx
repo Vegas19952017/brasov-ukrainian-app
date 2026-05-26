@@ -364,7 +364,7 @@ export default function ListingDetailPage() {
             <a
               href={`tel:${listing.phone}`}
               onClick={() => handleContactClick('phone')}
-              className="px-4 py-3.5 rounded-2xl bg-white border border-black/10 hover:bg-black/3 text-foreground flex items-center justify-center gap-2 transition-all duration-200 font-bold"
+              className="px-4 py-3.5 rounded-2xl bg-white/82 backdrop-blur-sm border border-black/10 hover:bg-white/95 text-foreground flex items-center justify-center gap-2 transition-all duration-200 font-bold"
             >
               <Phone size={18} className="text-muted" />
               <span>Зателефонувати: {listing.phone}</span>

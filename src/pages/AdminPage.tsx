@@ -138,7 +138,7 @@ export default function AdminPage() {
               <button
                 type="button"
                 onClick={() => setRejectModalId(null)}
-                className="flex-1 py-2.5 rounded-xl text-xs font-bold bg-white border border-black/10 hover:bg-black/4 text-muted"
+                className="flex-1 py-2.5 rounded-xl text-xs font-bold bg-white/80 backdrop-blur-sm border border-black/10 hover:bg-white/95 text-muted"
               >
                 Скасувати
               </button>
@@ -188,7 +188,7 @@ export default function AdminPage() {
               'px-3.5 py-2 rounded-xl text-xs font-bold border shrink-0 transition-all duration-200',
               tab === key
                 ? 'bg-black text-white border-black'
-                : 'bg-white text-muted border-black/10 hover:border-black/20'
+                : 'bg-white/80 backdrop-blur-sm text-muted border-black/10 hover:border-black/20'
             )}
           >
             {label}
@@ -381,7 +381,7 @@ export default function AdminPage() {
                         }));
                         toast.success('Скаргу відхилено');
                       }}
-                      className="flex-1 py-2 rounded-xl text-xs font-bold bg-white border border-black/10 hover:bg-black/4 text-muted"
+                      className="flex-1 py-2 rounded-xl text-xs font-bold bg-white/80 backdrop-blur-sm border border-black/10 hover:bg-white/95 text-muted"
                     >
                       Відхилити скаргу
                     </button>
@@ -510,7 +510,7 @@ export default function AdminPage() {
                           'px-2.5 py-1.5 rounded-lg border text-[9px] font-bold flex items-center gap-1 transition-all',
                           isSpecVerified
                             ? 'bg-emerald-50 text-emerald-600 border-emerald-200'
-                            : 'bg-white text-muted border-black/10 hover:bg-black/4'
+                            : 'bg-white/80 backdrop-blur-sm text-muted border-black/10 hover:bg-white/95'
                         )}
                       >
                         <ShieldCheck size={11} />
@@ -524,7 +524,7 @@ export default function AdminPage() {
                           'px-2.5 py-1.5 rounded-lg border text-[9px] font-bold flex items-center gap-1 transition-all',
                           specPromo === 'premium'
                             ? 'bg-[#c9a84c]/10 text-[#c9a84c] border-[#c9a84c]/25'
-                            : 'bg-white text-muted border-black/10 hover:bg-black/4'
+                            : 'bg-white/80 backdrop-blur-sm text-muted border-black/10 hover:bg-white/95'
                         )}
                       >
                         <Gem size={11} />
@@ -538,7 +538,7 @@ export default function AdminPage() {
                           'px-2.5 py-1.5 rounded-lg border text-[9px] font-bold flex items-center gap-1 transition-all',
                           specPromo === 'basic'
                             ? 'bg-black/8 text-black/70 border-black/15'
-                            : 'bg-white text-muted border-black/10 hover:bg-black/4'
+                            : 'bg-white/80 backdrop-blur-sm text-muted border-black/10 hover:bg-white/95'
                         )}
                       >
                         <Award size={11} />
