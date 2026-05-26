@@ -8,6 +8,7 @@ import { getLocalizedName, cn } from '../lib/utils';
 import { geocodeAddress } from '../lib/geocode';
 import { uploadFile } from '../lib/upload';
 import PaymentModal from '../components/PaymentModal';
+import DarkSelect from '../components/ui/DarkSelect';
 
 const DISTRICTS = [
   'Astra', 'Bartolomeu', 'Blumăna', 'Brașovechi', 'Centrul Civic', 'Centrul Istoric',
@@ -156,22 +157,17 @@ export default function AddListingPage() {
       <form onSubmit={handleSubmit} className="space-y-5">
         {/* Category */}
         <div className="space-y-1.5">
-          <label htmlFor="category" className="text-xs text-white/50 font-bold uppercase tracking-wider">{t('add_listing.category_label')}</label>
-          <select
-            id="category"
-            name="category"
+          <label className="text-xs text-white/50 font-bold uppercase tracking-wider">{t('add_listing.category_label')}</label>
+          <DarkSelect
             value={categoryId}
-            onChange={(e) => setCategoryId(e.target.value)}
+            onChange={setCategoryId}
             required
-            className="input-glass py-3 text-sm appearance-none"
-          >
-            <option value="">{t('add_listing.select_category')}</option>
-            {categories.map((cat) => (
-              <option key={cat.id} value={cat.id}>
-                {getLocalizedName(cat, i18n.language)}
-              </option>
-            ))}
-          </select>
+            placeholder={t('add_listing.select_category')}
+            options={categories.map((cat) => ({
+              value: cat.id,
+              label: getLocalizedName(cat, i18n.language),
+            }))}
+          />
         </div>
 
         {/* Title */}
