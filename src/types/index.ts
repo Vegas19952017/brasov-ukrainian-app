@@ -187,3 +187,23 @@ export const DEFAULT_FILTERS: SearchFilters = {
 };
 
 export const COMMUNITY_CHAT_ROOM_ID = 'community';
+
+export type PaymentProvider = 'stripe' | 'stars';
+export type PaymentStatus = 'pending' | 'paid' | 'failed' | 'refunded';
+export type PaymentPlan = 'basic' | 'premium' | 'boost';
+
+export interface Payment {
+  id: string;
+  listing_id: string;
+  user_id: string;
+  provider: PaymentProvider;
+  plan: PaymentPlan;
+  currency: 'EUR' | 'RON' | 'XTR';
+  amount: number;
+  status: PaymentStatus;
+  stripe_session_id: string | null;
+  stripe_payment_intent: string | null;
+  telegram_charge_id: string | null;
+  created_at: string;
+  paid_at: string | null;
+}

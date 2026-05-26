@@ -7,6 +7,7 @@ import { useStore } from '../store';
 import { getLocalizedName, cn } from '../lib/utils';
 import { geocodeAddress } from '../lib/geocode';
 import { uploadFile } from '../lib/upload';
+import PaymentModal from '../components/PaymentModal';
 
 const DISTRICTS = [
   'Astra', 'Bartolomeu', 'Blumăna', 'Brașovechi', 'Centrul Civic', 'Centrul Istoric',
@@ -46,6 +47,7 @@ export default function AddListingPage() {
   const [destination, setDestination] = useState('');
 
   const [submitting, setSubmitting] = useState(false);
+  const [paymentListingId, setPaymentListingId] = useState<string | null>(null);
 
   const selectedCategory = categories.find((c) => c.id === categoryId);
   const isCarpooling = selectedCategory?.slug === 'transport';
@@ -144,8 +146,7 @@ export default function AddListingPage() {
 
     addListing(newListing);
     setSubmitting(false);
-    toast.success(t('add_listing.success'));
-    navigate('/cabinet');
+    setPaymentListingId(newListing.id);
   };
 
   return (
@@ -503,6 +504,22 @@ export default function AddListingPage() {
           <span>{submitting ? t('add_listing.submitting') : t('add_listing.submit')}</span>
         </button>
       </form>
+
+      {paymentListingId && profile && (
+        <PaymentModal
+          listingId={paymentListingId}
+          userId={profile.id}
+          onClose={() => {
+            setPaymentListingId(null);
+            toast.success(t('add_listing.success'));
+            navigate('/cabinet');
+          }}
+          onSuccess={() => {
+            toast.success(t('add_listing.success'));
+            navigate('/cabinet');
+          }}
+        />
+      )}
     </div>
   );
 }

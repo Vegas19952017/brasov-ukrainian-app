@@ -4,11 +4,13 @@ import { supabase, isSupabaseConfigured } from './supabase';
 const VAPID_PUBLIC_KEY = import.meta.env.VITE_VAPID_PUBLIC_KEY as string | undefined;
 const SW_PATH = '/brasov-ukrainian-app/sw.js';
 
-function urlBase64ToUint8Array(base64: string): Uint8Array {
+function urlBase64ToUint8Array(base64: string): ArrayBuffer {
   const pad = base64.length % 4;
   const b64 = base64.replace(/-/g, '+').replace(/_/g, '/') + '='.repeat(pad ? 4 - pad : 0);
   const raw = atob(b64);
-  return Uint8Array.from(raw, (c) => c.charCodeAt(0));
+  const arr = new Uint8Array(raw.length);
+  for (let i = 0; i < raw.length; i++) arr[i] = raw.charCodeAt(i);
+  return arr.buffer;
 }
 
 let swRegistration: ServiceWorkerRegistration | null = null;
