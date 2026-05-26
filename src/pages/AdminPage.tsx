@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  CheckCircle, XCircle, Clock, Eye, Shield, UserCheck,
-  Star, Gem, Award, Search, Trash2, ShieldCheck, BarChart2,
-  AlertTriangle, MessageSquare, RefreshCw, Smartphone, X
+  CheckCircle, XCircle, Eye, Shield, UserCheck,
+  Gem, Award, Search, Trash2, ShieldCheck, BarChart2,
+  AlertTriangle, MessageSquare, X
 } from 'lucide-react';
 import { useStore } from '../store';
 import { cn, formatPrice, timeAgo } from '../lib/utils';
@@ -19,7 +19,6 @@ export default function AdminPage() {
   const [tab, setTab] = useState<AdminTab>('listings_queue');
   const [mgmtSearch, setMgmtSearch] = useState('');
 
-  // NEW: rejection modal state
   const [rejectModalId, setRejectModalId] = useState<string | null>(null);
   const [rejectReason, setRejectReason] = useState('');
 
@@ -45,8 +44,8 @@ export default function AdminPage() {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
         <div className="glass-panel p-8 text-center space-y-3">
-          <Shield size={40} className="text-crimson-light mx-auto opacity-50" />
-          <p className="text-white/40 text-sm">{t('admin.access_denied')}</p>
+          <Shield size={40} className="text-red-400 mx-auto opacity-50" />
+          <p className="text-muted text-sm">{t('admin.access_denied')}</p>
         </div>
       </div>
     );
@@ -61,13 +60,11 @@ export default function AdminPage() {
     toast.success(t('admin.approved_success'));
   };
 
-  // NEW: open rejection modal for listing
   const openRejectModal = (id: string) => {
     setRejectModalId(id);
     setRejectReason('');
   };
 
-  // NEW: confirm rejection with reason
   const handleConfirmReject = () => {
     if (!rejectModalId) return;
     rejectListing(rejectModalId, rejectReason.trim() || undefined);
@@ -78,19 +75,19 @@ export default function AdminPage() {
 
   const handleToggleVerification = (id: string, current: boolean) => {
     setVerificationStatus(id, !current);
-    toast.success(!current ? 'Специалист верифицирован!' : 'Верификация снята');
+    toast.success(!current ? 'Спеціаліст верифікований!' : 'Верифікацію знято');
   };
 
   const handleSetPromo = (id: string, level: 'free' | 'basic' | 'premium') => {
     const days = level !== 'free' ? 30 : undefined;
     setPromotionLevel(id, level, days);
-    toast.success(`Уровень продвижения изменен на ${level.toUpperCase()}`);
+    toast.success(`Рівень просування змінено на ${level.toUpperCase()}`);
   };
 
   const handleDeleteListing = (id: string) => {
-    if (window.confirm('Вы действительно хотите удалить эту карточку специалиста?')) {
+    if (window.confirm('Ви дійсно хочете видалити цю картку спеціаліста?')) {
       removeListing(id);
-      toast.success('Карточка удалена');
+      toast.success('Картку видалено');
     }
   };
 
@@ -107,51 +104,51 @@ export default function AdminPage() {
 
   return (
     <div className="px-4 py-5 space-y-5 animate-fade-in pb-16">
-      {/* NEW: Rejection reason modal */}
+      {/* Rejection reason modal */}
       {rejectModalId && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-fade-in">
-          <div className="glass-panel p-5 w-full max-w-sm space-y-4 border border-crimson/30 shadow-2xl">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-fade-in">
+          <div className="glass-panel p-5 w-full max-w-sm space-y-4 border border-red-200 shadow-2xl">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 text-crimson-light font-bold text-sm">
+              <div className="flex items-center gap-2 text-red-500 font-bold text-sm">
                 <XCircle size={16} />
-                Отклонить заявку
+                Відхилити заявку
               </div>
               <button
                 type="button"
                 onClick={() => setRejectModalId(null)}
-                className="w-7 h-7 rounded-lg bg-white/5 border border-glass-border flex items-center justify-center text-white/40 hover:text-white"
+                className="w-7 h-7 rounded-lg bg-black/5 border border-black/10 flex items-center justify-center text-muted hover:text-black"
               >
                 <X size={14} />
               </button>
             </div>
             <div className="space-y-2">
-              <label className="text-[10px] text-white/40 uppercase tracking-wider font-semibold block">
-                Причина отклонения (видна специалисту)
+              <label className="text-[10px] text-black/40 uppercase tracking-wider font-semibold block">
+                Причина відхилення (видна спеціалісту)
               </label>
               <textarea
                 value={rejectReason}
                 onChange={(e) => setRejectReason(e.target.value)}
-                placeholder="Например: недостаточно информации, неверная категория…"
+                placeholder="Наприклад: недостатньо інформації, невірна категорія…"
                 rows={3}
                 className="input-glass text-xs resize-none"
               />
-              <p className="text-[10px] text-white/30">Необязательно, но помогает специалисту исправить заявку.</p>
+              <p className="text-[10px] text-black/30">Необов'язково, але допомагає спеціалісту виправити заявку.</p>
             </div>
             <div className="flex gap-2 pt-1">
               <button
                 type="button"
                 onClick={() => setRejectModalId(null)}
-                className="flex-1 py-2.5 rounded-xl text-xs font-bold bg-white/5 border border-glass-border hover:bg-glass-hover text-white/60"
+                className="flex-1 py-2.5 rounded-xl text-xs font-bold bg-white border border-black/10 hover:bg-black/4 text-muted"
               >
-                Отмена
+                Скасувати
               </button>
               <button
                 type="button"
                 onClick={handleConfirmReject}
-                className="flex-[2] flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold bg-crimson/15 text-crimson-light border border-crimson/30 hover:bg-crimson/25"
+                className="flex-[2] flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold bg-red-50 text-red-500 border border-red-200 hover:bg-red-100"
               >
                 <XCircle size={14} />
-                Отклонить
+                Відхилити
               </button>
             </div>
           </div>
@@ -160,13 +157,13 @@ export default function AdminPage() {
 
       {/* Admin header */}
       <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-xl bg-amber/15 border border-amber/30 flex items-center justify-center shadow-blue-glow">
-          <Shield size={20} className="text-amber animate-pulse" />
+        <div className="w-10 h-10 rounded-xl bg-[#c9a84c]/10 border border-[#c9a84c]/25 flex items-center justify-center">
+          <Shield size={20} className="text-[#c9a84c]" />
         </div>
         <div>
-          <h2 className="text-lg font-display font-bold text-white">{t('admin.title')}</h2>
-          <p className="text-xs text-white/40">
-            Очередь: {pendingListings.length} объявл. · {pendingProfiles.length} проф. · {pendingReviews.length} отзыв.
+          <h2 className="text-lg font-display font-bold text-foreground">{t('admin.title')}</h2>
+          <p className="text-xs text-muted">
+            Черга: {pendingListings.length} оголош. · {pendingProfiles.length} проф. · {pendingReviews.length} відг.
           </p>
         </div>
       </div>
@@ -175,12 +172,12 @@ export default function AdminPage() {
       <div className="flex gap-1.5 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-none">
         {(
           [
-            ['listings_queue', `Модерация (${pendingListings.length})`],
-            ['reviews', `Отзывы (${pendingReviews.length})`],
-            ['complaints', `Жалобы (${reviewComplaints.length})`],
-            ['profiles', `Пользователи (${pendingProfiles.length})`],
-            ['listings_mgmt', 'База специалистов'],
-            ['analytics', 'Аналитика'],
+            ['listings_queue', `Модерація (${pendingListings.length})`],
+            ['reviews', `Відгуки (${pendingReviews.length})`],
+            ['complaints', `Скарги (${reviewComplaints.length})`],
+            ['profiles', `Користувачі (${pendingProfiles.length})`],
+            ['listings_mgmt', 'База спеціалістів'],
+            ['analytics', 'Аналітика'],
           ] as [AdminTab, string][]
         ).map(([key, label]) => (
           <button
@@ -190,8 +187,8 @@ export default function AdminPage() {
             className={cn(
               'px-3.5 py-2 rounded-xl text-xs font-bold border shrink-0 transition-all duration-200',
               tab === key
-                ? 'bg-royal/20 text-royal-light border-royal/40'
-                : 'bg-obsidian-800/20 border-glass-border text-white/40'
+                ? 'bg-black text-white border-black'
+                : 'bg-white text-muted border-black/10 hover:border-black/20'
             )}
           >
             {label}
@@ -204,11 +201,11 @@ export default function AdminPage() {
         pendingListings.length > 0 ? (
           <div className="space-y-4">
             {pendingListings.map((listing) => (
-              <div key={listing.id} className="glass-panel overflow-hidden border border-glass-border">
+              <div key={listing.id} className="glass-panel overflow-hidden">
                 {listing.photos.length > 0 && (
-                  <div className="relative w-full h-36 border-b border-glass-border">
+                  <div className="relative w-full h-36 border-b border-black/7">
                     <img src={listing.photos[0]} alt={listing.title} className="w-full h-full object-cover" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-obsidian/90 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
                     <div className="absolute bottom-3 left-3">
                       <span className="badge-pending">{t('listing.status_pending')}</span>
                     </div>
@@ -216,24 +213,23 @@ export default function AdminPage() {
                 )}
                 <div className="p-4 space-y-3">
                   <div>
-                    <h4 className="text-sm font-semibold text-white">{listing.title}</h4>
-                    <p className="text-xs text-white/45 mt-1 line-clamp-3 leading-relaxed">{listing.description}</p>
+                    <h4 className="text-sm font-semibold text-foreground">{listing.title}</h4>
+                    <p className="text-xs text-muted mt-1 line-clamp-3 leading-relaxed">{listing.description}</p>
                   </div>
-                  {/* Specialist details preview */}
                   <div className="flex flex-wrap gap-1.5 text-[10px]">
                     {listing.languages?.map((l) => (
-                      <span key={l} className="bg-white/5 border border-glass-border px-2 py-0.5 rounded text-white/50">{l}</span>
+                      <span key={l} className="bg-black/5 border border-black/8 px-2 py-0.5 rounded text-muted">{l}</span>
                     ))}
                     {listing.districts?.slice(0, 2).map((d) => (
-                      <span key={d} className="bg-royal/10 border border-royal/20 px-2 py-0.5 rounded text-royal-light">{d}</span>
+                      <span key={d} className="bg-black/6 border border-black/10 px-2 py-0.5 rounded text-black/60">{d}</span>
                     ))}
                     {listing.services?.slice(0, 2).map((s) => (
-                      <span key={s} className="bg-amber/10 border border-amber/20 px-2 py-0.5 rounded text-amber">#{s}</span>
+                      <span key={s} className="bg-[#c9a84c]/10 border border-[#c9a84c]/20 px-2 py-0.5 rounded text-[#c9a84c]">#{s}</span>
                     ))}
                   </div>
-                  <div className="flex flex-wrap gap-2 text-xs text-white/30 pt-1 border-t border-white/5">
+                  <div className="flex flex-wrap gap-2 text-xs text-black/30 pt-1 border-t border-black/7">
                     {listing.price !== null && (
-                      <span className="text-amber font-bold">
+                      <span className="text-[#c9a84c] font-bold">
                         {formatPrice(listing.price, listing.currency)}
                       </span>
                     )}
@@ -244,24 +240,23 @@ export default function AdminPage() {
                     <button
                       type="button"
                       onClick={() => navigate(`/listing/${listing.id}`)}
-                      className="btn-ghost text-xs flex items-center gap-1 flex-1 justify-center py-2 border border-glass-border rounded-xl"
+                      className="btn-ghost text-xs flex items-center gap-1 flex-1 justify-center py-2"
                     >
                       <Eye size={14} />
-                      <span>Смотреть</span>
+                      <span>Переглянути</span>
                     </button>
                     <button
                       type="button"
                       onClick={() => handleApproveListing(listing.id)}
-                      className="flex-[2] flex items-center justify-center gap-1.5 py-2 rounded-xl text-xs font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/20 transition-all"
+                      className="flex-[2] flex items-center justify-center gap-1.5 py-2 rounded-xl text-xs font-bold bg-emerald-50 text-emerald-600 border border-emerald-200 hover:bg-emerald-100 transition-all"
                     >
                       <CheckCircle size={14} />
                       {t('admin.approve')}
                     </button>
-                    {/* NEW: reject opens modal with reason input */}
                     <button
                       type="button"
                       onClick={() => openRejectModal(listing.id)}
-                      className="flex-[2] flex items-center justify-center gap-1.5 py-2 rounded-xl text-xs font-bold bg-crimson/10 text-crimson-light border border-crimson/30 hover:bg-crimson/20 transition-all"
+                      className="flex-[2] flex items-center justify-center gap-1.5 py-2 rounded-xl text-xs font-bold bg-red-50 text-red-500 border border-red-200 hover:bg-red-100 transition-all"
                     >
                       <XCircle size={14} />
                       {t('admin.reject')}
@@ -273,8 +268,8 @@ export default function AdminPage() {
           </div>
         ) : (
           <div className="glass-panel py-16 flex flex-col items-center gap-3">
-            <CheckCircle size={28} className="text-emerald-400" />
-            <p className="text-xs text-white/40">{t('admin.no_pending')}</p>
+            <CheckCircle size={28} className="text-emerald-500" />
+            <p className="text-xs text-muted">{t('admin.no_pending')}</p>
           </div>
         )
       )}
@@ -286,40 +281,40 @@ export default function AdminPage() {
             {pendingReviews.map((rev) => {
               const target = listings.find((l) => l.id === rev.listing_id);
               return (
-                <div key={rev.id} className="glass-panel p-4 space-y-3 border border-glass-border">
+                <div key={rev.id} className="glass-panel p-4 space-y-3">
                   <div className="flex items-start justify-between">
                     <div>
-                      <p className="text-xs font-bold text-white">{rev.profile?.first_name || 'Клиент'}</p>
-                      <p className="text-[10px] text-white/40">@{rev.profile?.username || rev.user_id}</p>
+                      <p className="text-xs font-bold text-foreground">{rev.profile?.first_name || 'Клієнт'}</p>
+                      <p className="text-[10px] text-muted">@{rev.profile?.username || rev.user_id}</p>
                     </div>
                     <StarRating rating={rev.rating} size={12} />
                   </div>
-                  <div className="bg-obsidian-900/50 p-3 rounded-xl border border-glass-border">
-                    <span className="text-[9px] text-white/30 uppercase block">К специалисту: {target?.title || 'Удален'}</span>
-                    <p className="text-xs text-white/70 mt-1 italic font-medium leading-relaxed">"{rev.comment}"</p>
+                  <div className="bg-black/3 p-3 rounded-xl border border-black/7">
+                    <span className="text-[9px] text-black/30 uppercase block">До спеціаліста: {target?.title || 'Видалено'}</span>
+                    <p className="text-xs text-black/70 mt-1 italic font-medium leading-relaxed">"{rev.comment}"</p>
                   </div>
                   <div className="flex gap-2 pt-1">
                     <button
                       type="button"
                       onClick={() => {
                         approveReview(rev.id);
-                        toast.success('Отзыв одобрен и опубликован!');
+                        toast.success('Відгук схвалено і опубліковано!');
                       }}
-                      className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/20"
+                      className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold bg-emerald-50 text-emerald-600 border border-emerald-200 hover:bg-emerald-100"
                     >
                       <CheckCircle size={14} />
-                      Одобрить
+                      Схвалити
                     </button>
                     <button
                       type="button"
                       onClick={() => {
                         rejectReview(rev.id);
-                        toast.success('Отзыв отклонен');
+                        toast.success('Відгук відхилено');
                       }}
-                      className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold bg-crimson/10 text-crimson-light border border-crimson/30 hover:bg-crimson/20"
+                      className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold bg-red-50 text-red-500 border border-red-200 hover:bg-red-100"
                     >
                       <XCircle size={14} />
-                      Отклонить
+                      Відхилити
                     </button>
                   </div>
                 </div>
@@ -328,8 +323,8 @@ export default function AdminPage() {
           </div>
         ) : (
           <div className="glass-panel py-16 flex flex-col items-center gap-3">
-            <MessageSquare size={28} className="text-white/20" />
-            <p className="text-xs text-white/40">Нет отзывов на модерацию</p>
+            <MessageSquare size={28} className="text-black/15" />
+            <p className="text-xs text-muted">Немає відгуків на модерацію</p>
           </div>
         )
       )}
@@ -342,26 +337,26 @@ export default function AdminPage() {
               const review = reviews.find((r) => r.id === comp.review_id);
               const target = review ? listings.find((l) => l.id === review.listing_id) : null;
               return (
-                <div key={comp.id} className="glass-panel p-4 space-y-3 border border-crimson/20 bg-crimson/5">
+                <div key={comp.id} className="glass-panel p-4 space-y-3 border border-red-200 bg-red-50/30">
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2 text-crimson-light font-bold text-xs">
+                    <div className="flex items-center gap-2 text-red-500 font-bold text-xs">
                       <AlertTriangle size={14} />
-                      <span>Жалоба от пользователя</span>
+                      <span>Скарга від користувача</span>
                     </div>
-                    <span className="text-[9px] text-white/30">{timeAgo(comp.created_at, 'uk')}</span>
+                    <span className="text-[9px] text-black/30">{timeAgo(comp.created_at, 'uk')}</span>
                   </div>
                   <div>
-                    <span className="text-[10px] text-white/40 block">Причина жалобы:</span>
-                    <p className="text-xs text-white/90 font-bold mt-0.5">{comp.reason}</p>
+                    <span className="text-[10px] text-black/40 block">Причина скарги:</span>
+                    <p className="text-xs text-foreground font-bold mt-0.5">{comp.reason}</p>
                   </div>
                   {review && (
-                    <div className="bg-obsidian-900/60 p-3 rounded-xl border border-glass-border space-y-1.5">
+                    <div className="bg-black/3 p-3 rounded-xl border border-black/7 space-y-1.5">
                       <div className="flex justify-between items-center text-[10px]">
-                        <span className="text-white/40">Отзыв от @{review.profile?.username || 'клиент'}</span>
+                        <span className="text-black/40">Відгук від @{review.profile?.username || 'клієнт'}</span>
                         <StarRating rating={review.rating} size={10} />
                       </div>
-                      <p className="text-xs text-white/60 italic">"{review.comment}"</p>
-                      <span className="text-[9px] text-royal-light block">Специалист: {target?.title || '—'}</span>
+                      <p className="text-xs text-black/60 italic">"{review.comment}"</p>
+                      <span className="text-[9px] text-muted block">Спеціаліст: {target?.title || '—'}</span>
                     </div>
                   )}
                   <div className="flex gap-2 pt-1">
@@ -372,11 +367,11 @@ export default function AdminPage() {
                         useStore.setState((s) => ({
                           reviewComplaints: s.reviewComplaints.filter((c) => c.id !== comp.id)
                         }));
-                        toast.success('Отзыв удален!');
+                        toast.success('Відгук видалено!');
                       }}
-                      className="flex-1 py-2 rounded-xl text-xs font-bold bg-crimson/15 text-crimson-light border border-crimson/30 hover:bg-crimson/25"
+                      className="flex-1 py-2 rounded-xl text-xs font-bold bg-red-50 text-red-500 border border-red-200 hover:bg-red-100"
                     >
-                      Удалить отзыв
+                      Видалити відгук
                     </button>
                     <button
                       type="button"
@@ -384,11 +379,11 @@ export default function AdminPage() {
                         useStore.setState((s) => ({
                           reviewComplaints: s.reviewComplaints.filter((c) => c.id !== comp.id)
                         }));
-                        toast.success('Жалоба отклонена');
+                        toast.success('Скаргу відхилено');
                       }}
-                      className="flex-1 py-2 rounded-xl text-xs font-bold bg-white/5 border border-glass-border hover:bg-glass-hover text-white/70"
+                      className="flex-1 py-2 rounded-xl text-xs font-bold bg-white border border-black/10 hover:bg-black/4 text-muted"
                     >
-                      Отклонить жалобу
+                      Відхилити скаргу
                     </button>
                   </div>
                 </div>
@@ -397,8 +392,8 @@ export default function AdminPage() {
           </div>
         ) : (
           <div className="glass-panel py-16 flex flex-col items-center gap-3">
-            <ShieldCheck size={28} className="text-emerald-400" />
-            <p className="text-xs text-white/40">Жалоб на отзывы нет. Все чисто!</p>
+            <ShieldCheck size={28} className="text-emerald-500" />
+            <p className="text-xs text-muted">Скарг на відгуки немає. Все чисто!</p>
           </div>
         )
       )}
@@ -408,10 +403,10 @@ export default function AdminPage() {
         pendingProfiles.length > 0 ? (
           <div className="space-y-3">
             {pendingProfiles.map((p) => (
-              <div key={p.id} className="glass-panel p-4 flex items-center justify-between gap-3 border border-glass-border animate-slide-up">
+              <div key={p.id} className="glass-panel p-4 flex items-center justify-between gap-3 animate-slide-up">
                 <div>
-                  <p className="text-sm font-semibold text-white">{p.first_name}</p>
-                  <p className="text-xs text-white/40 mt-0.5">@{p.username ?? p.id}</p>
+                  <p className="text-sm font-semibold text-foreground">{p.first_name}</p>
+                  <p className="text-xs text-muted mt-0.5">@{p.username ?? p.id}</p>
                 </div>
                 <div className="flex gap-2">
                   <button
@@ -420,8 +415,8 @@ export default function AdminPage() {
                       approveProfile(p.id);
                       toast.success(t('admin.profile_approved'));
                     }}
-                    className="px-3.5 py-2.5 rounded-xl text-xs font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/20"
-                    title="Одобрить"
+                    className="px-3.5 py-2.5 rounded-xl text-xs font-bold bg-emerald-50 text-emerald-600 border border-emerald-200 hover:bg-emerald-100"
+                    title="Схвалити"
                   >
                     <UserCheck size={14} />
                   </button>
@@ -431,8 +426,8 @@ export default function AdminPage() {
                       rejectProfile(p.id);
                       toast.success(t('admin.profile_rejected'));
                     }}
-                    className="px-3.5 py-2.5 rounded-xl text-xs font-bold bg-crimson/10 text-crimson-light border border-crimson/30 hover:bg-crimson/20"
-                    title="Отклонить"
+                    className="px-3.5 py-2.5 rounded-xl text-xs font-bold bg-red-50 text-red-500 border border-red-200 hover:bg-red-100"
+                    title="Відхилити"
                   >
                     <XCircle size={14} />
                   </button>
@@ -441,7 +436,7 @@ export default function AdminPage() {
             ))}
           </div>
         ) : (
-          <div className="glass-panel py-12 text-center text-sm text-white/40">
+          <div className="glass-panel py-12 text-center text-sm text-muted">
             {t('admin.no_pending_profiles')}
           </div>
         )
@@ -455,10 +450,10 @@ export default function AdminPage() {
               type="text"
               value={mgmtSearch}
               onChange={(e) => setMgmtSearch(e.target.value)}
-              placeholder="Поиск специалистов в базе…"
+              placeholder="Пошук спеціалістів у базі…"
               className="input-glass py-3 pl-10 pr-4 text-xs"
             />
-            <Search size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/30" />
+            <Search size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted" />
           </div>
 
           <div className="space-y-3">
@@ -467,45 +462,43 @@ export default function AdminPage() {
               .map((l) => {
                 const isSpecVerified = l.is_verified;
                 const specPromo = l.promotion_level || 'free';
-                // Show promotion expiry if set
                 const promoExpiry = l.promotion_until
-                  ? new Date(l.promotion_until).toLocaleDateString('ru-RU')
+                  ? new Date(l.promotion_until).toLocaleDateString('uk-UA')
                   : null;
                 return (
-                  <div key={l.id} className="glass-panel p-4 space-y-3.5 border border-glass-border">
+                  <div key={l.id} className="glass-panel p-4 space-y-3.5">
                     <div className="flex justify-between items-start">
                       <div>
-                        <h4 className="text-xs font-bold text-white flex items-center gap-1.5">
+                        <h4 className="text-xs font-bold text-foreground flex items-center gap-1.5">
                           {l.title}
-                          {isSpecVerified && <CheckCircle size={12} className="text-emerald-400 shrink-0" />}
+                          {isSpecVerified && <CheckCircle size={12} className="text-emerald-500 shrink-0" />}
                         </h4>
-                        <p className="text-[10px] text-white/40 mt-0.5">
+                        <p className="text-[10px] text-muted mt-0.5">
                           @{l.telegram_username} · {t(`profile.status_${l.status}`)}
                         </p>
                       </div>
                       <div className="flex flex-col items-end gap-1">
                         {specPromo === 'premium' && (
-                          <span className="text-[8px] font-bold text-amber bg-amber/10 border border-amber/20 rounded px-1.5 py-0.5">PREMIUM</span>
+                          <span className="text-[8px] font-bold text-[#c9a84c] bg-[#c9a84c]/10 border border-[#c9a84c]/20 rounded px-1.5 py-0.5">PREMIUM</span>
                         )}
                         {specPromo === 'basic' && (
-                          <span className="text-[8px] font-bold text-royal-light bg-royal/10 border border-royal/20 rounded px-1.5 py-0.5">BASIC</span>
+                          <span className="text-[8px] font-bold text-black/60 bg-black/6 border border-black/10 rounded px-1.5 py-0.5">BASIC</span>
                         )}
                         {specPromo === 'free' && (
-                          <span className="text-[8px] font-bold text-white/30 bg-white/5 border border-glass-border rounded px-1.5 py-0.5">FREE</span>
+                          <span className="text-[8px] font-bold text-black/30 bg-black/4 border border-black/8 rounded px-1.5 py-0.5">FREE</span>
                         )}
-                        {/* NEW: show promotion expiry date */}
                         {promoExpiry && specPromo !== 'free' && (
-                          <span className="text-[9px] text-white/30">до {promoExpiry}</span>
+                          <span className="text-[9px] text-muted">до {promoExpiry}</span>
                         )}
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-2 text-[10px] text-white/50 pt-2.5 border-t border-white/5">
+                    <div className="grid grid-cols-2 gap-2 text-[10px] text-muted pt-2.5 border-t border-black/7">
                       <div>
-                        <span className="text-white/20">Языки:</span> {l.languages?.join(', ') || 'RU'}
+                        <span className="text-black/25">Мови:</span> {l.languages?.join(', ') || 'RU'}
                       </div>
                       <div>
-                        <span className="text-white/20">Районы:</span> {l.districts?.length || 0} шт.
+                        <span className="text-black/25">Райони:</span> {l.districts?.length || 0} шт.
                       </div>
                     </div>
 
@@ -516,12 +509,12 @@ export default function AdminPage() {
                         className={cn(
                           'px-2.5 py-1.5 rounded-lg border text-[9px] font-bold flex items-center gap-1 transition-all',
                           isSpecVerified
-                            ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
-                            : 'bg-white/5 text-white/50 border-glass-border hover:bg-glass-hover'
+                            ? 'bg-emerald-50 text-emerald-600 border-emerald-200'
+                            : 'bg-white text-muted border-black/10 hover:bg-black/4'
                         )}
                       >
                         <ShieldCheck size={11} />
-                        {isSpecVerified ? 'Снять проверку' : 'Верифицировать'}
+                        {isSpecVerified ? 'Зняти перевірку' : 'Верифікувати'}
                       </button>
 
                       <button
@@ -530,12 +523,12 @@ export default function AdminPage() {
                         className={cn(
                           'px-2.5 py-1.5 rounded-lg border text-[9px] font-bold flex items-center gap-1 transition-all',
                           specPromo === 'premium'
-                            ? 'bg-amber/10 text-amber border-amber/20'
-                            : 'bg-white/5 text-white/50 border-glass-border hover:bg-glass-hover'
+                            ? 'bg-[#c9a84c]/10 text-[#c9a84c] border-[#c9a84c]/25'
+                            : 'bg-white text-muted border-black/10 hover:bg-black/4'
                         )}
                       >
                         <Gem size={11} />
-                        {specPromo === 'premium' ? 'Снять Премиум' : 'Сделать Премиум'}
+                        {specPromo === 'premium' ? 'Зняти Преміум' : 'Зробити Преміум'}
                       </button>
 
                       <button
@@ -544,21 +537,21 @@ export default function AdminPage() {
                         className={cn(
                           'px-2.5 py-1.5 rounded-lg border text-[9px] font-bold flex items-center gap-1 transition-all',
                           specPromo === 'basic'
-                            ? 'bg-royal/10 text-royal-light border-royal/20'
-                            : 'bg-white/5 text-white/50 border-glass-border hover:bg-glass-hover'
+                            ? 'bg-black/8 text-black/70 border-black/15'
+                            : 'bg-white text-muted border-black/10 hover:bg-black/4'
                         )}
                       >
                         <Award size={11} />
-                        {specPromo === 'basic' ? 'Снять Базовый' : 'Сделать Базовым'}
+                        {specPromo === 'basic' ? 'Зняти Базовий' : 'Зробити Базовим'}
                       </button>
 
                       <button
                         type="button"
                         onClick={() => handleDeleteListing(l.id)}
-                        className="px-2.5 py-1.5 rounded-lg border text-[9px] font-bold bg-crimson/10 text-crimson-light border-crimson/20 hover:bg-crimson/25 ml-auto flex items-center gap-1"
+                        className="px-2.5 py-1.5 rounded-lg border text-[9px] font-bold bg-red-50 text-red-500 border-red-200 hover:bg-red-100 ml-auto flex items-center gap-1"
                       >
                         <Trash2 size={11} />
-                        Удалить
+                        Видалити
                       </button>
                     </div>
                   </div>
@@ -573,30 +566,29 @@ export default function AdminPage() {
         <div className="space-y-4">
           <div className="grid grid-cols-3 gap-2">
             <div className="glass-panel p-3 text-center">
-              <span className="text-[9px] text-white/40 uppercase tracking-wider block mb-1">Просмотры</span>
-              <span className="text-xl font-black text-royal-light">{totalViews}</span>
+              <span className="text-[9px] text-black/40 uppercase tracking-wider block mb-1">Перегляди</span>
+              <span className="text-xl font-black text-foreground">{totalViews}</span>
             </div>
             <div className="glass-panel p-3 text-center">
-              <span className="text-[9px] text-white/40 uppercase tracking-wider block mb-1">Клики</span>
-              <span className="text-xl font-black text-amber">{totalClicks}</span>
+              <span className="text-[9px] text-black/40 uppercase tracking-wider block mb-1">Кліки</span>
+              <span className="text-xl font-black text-[#c9a84c]">{totalClicks}</span>
             </div>
             <div className="glass-panel p-3 text-center">
-              <span className="text-[9px] text-white/40 uppercase tracking-wider block mb-1">CTR</span>
-              <span className="text-xl font-black text-emerald-400">{totalCTR.toFixed(1)}%</span>
+              <span className="text-[9px] text-black/40 uppercase tracking-wider block mb-1">CTR</span>
+              <span className="text-xl font-black text-emerald-600">{totalCTR.toFixed(1)}%</span>
             </div>
           </div>
 
-          {/* Totals by promo level */}
           <div className="grid grid-cols-3 gap-2">
             {(['premium', 'basic', 'free'] as const).map((level) => {
               const count = listings.filter((l) => l.promotion_level === level && l.status === 'approved').length;
-              const colors = {
-                premium: 'text-amber border-amber/30',
-                basic: 'text-royal-light border-royal/30',
-                free: 'text-white/40 border-glass-border',
+              const styles = {
+                premium: 'text-[#c9a84c] border-[#c9a84c]/25',
+                basic: 'text-black/60 border-black/12',
+                free: 'text-muted border-black/8',
               };
               return (
-                <div key={level} className={cn('glass-panel p-3 text-center border', colors[level])}>
+                <div key={level} className={cn('glass-panel p-3 text-center border', styles[level])}>
                   <span className="text-[9px] uppercase tracking-wider block mb-1 opacity-70">{level}</span>
                   <span className="text-xl font-black">{count}</span>
                 </div>
@@ -604,30 +596,30 @@ export default function AdminPage() {
             })}
           </div>
 
-          <div className="glass-panel p-4 space-y-3.5 border border-glass-border">
-            <h3 className="text-xs font-bold text-white/30 uppercase tracking-wider flex items-center gap-1.5">
-              <BarChart2 size={14} className="text-royal-light" />
-              Статистика по специалистам
+          <div className="glass-panel p-4 space-y-3.5">
+            <h3 className="text-xs font-bold text-black/30 uppercase tracking-wider flex items-center gap-1.5">
+              <BarChart2 size={14} className="text-muted" />
+              Статистика по спеціалістах
             </h3>
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="text-[9px] text-white/30 uppercase font-semibold">
-                    <th className="pb-2 font-semibold">Специалист</th>
-                    <th className="pb-2 text-center font-semibold">Просмотры</th>
-                    <th className="pb-2 text-center font-semibold">Клики</th>
+                  <tr className="text-[9px] text-black/30 uppercase font-semibold">
+                    <th className="pb-2 font-semibold">Спеціаліст</th>
+                    <th className="pb-2 text-center font-semibold">Перегляди</th>
+                    <th className="pb-2 text-center font-semibold">Кліки</th>
                     <th className="pb-2 text-right font-semibold">CTR</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-glass-border/30 text-[11px] text-white/70">
+                <tbody className="divide-y divide-black/5 text-[11px] text-black/70">
                   {listingAnalytics
                     .sort((a, b) => b.views - a.views)
                     .map((item) => (
                       <tr key={item.id}>
                         <td className="py-2.5 font-bold truncate max-w-[120px] pr-2">{item.title}</td>
-                        <td className="py-2.5 text-center font-bold text-royal-light">{item.views}</td>
-                        <td className="py-2.5 text-center font-bold text-amber">{item.clicks}</td>
-                        <td className="py-2.5 text-right font-extrabold text-emerald-400">{item.ctr.toFixed(1)}%</td>
+                        <td className="py-2.5 text-center font-bold text-black/60">{item.views}</td>
+                        <td className="py-2.5 text-center font-bold text-[#c9a84c]">{item.clicks}</td>
+                        <td className="py-2.5 text-right font-extrabold text-emerald-600">{item.ctr.toFixed(1)}%</td>
                       </tr>
                     ))}
                 </tbody>

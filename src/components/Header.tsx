@@ -56,7 +56,7 @@ export default function Header() {
                 Брашов
               </h1>
               <p className="text-[9px] text-muted font-medium tracking-[0.12em] uppercase">
-                Українськийй
+                Український
               </p>
             </div>
           </button>
