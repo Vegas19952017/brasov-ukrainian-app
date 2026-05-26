@@ -111,11 +111,11 @@ export default function ScrollExpandHero({
           preload="auto"
           style={{
             position: 'absolute',
-            inset: 'auto 0 0 0',
-            top: '300px',
+            inset: 0,
             width: '100%',
-            height: 'calc(100% - 300px)',
+            height: '100%',
             objectFit: 'cover',
+            objectPosition: 'center 60%',
             opacity: 0,
             willChange: 'opacity',
           }}
@@ -125,7 +125,7 @@ export default function ScrollExpandHero({
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              'linear-gradient(to bottom, #ffffff 0%, rgba(255,255,255,0.55) 28%, rgba(255,255,255,0.05) 52%, rgba(255,255,255,0.45) 78%, #ffffff 100%)',
+              'linear-gradient(to bottom, rgba(255,255,255,0.90) 0%, rgba(255,255,255,0.55) 22%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.30) 75%, rgba(255,255,255,0.85) 100%)',
           }}
         />
       </div>
@@ -147,7 +147,7 @@ export default function ScrollExpandHero({
         >
           Брашов{' '}
           <em className="not-italic" style={{ color: '#6F6F6F' }}>
-            Українськийй.
+            Український.
           </em>
         </h1>
 
