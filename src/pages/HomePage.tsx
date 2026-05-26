@@ -17,7 +17,7 @@ export default function HomePage() {
       subtitle={t('home.subtitle')}
       scrollToExpand={t('home.scroll_hint')}
     >
-      <div className="space-y-5 py-4 bg-white min-h-screen">
+      <div className="space-y-5 py-4 min-h-screen">
         <CategoryGrid />
         <FilterBar />
         <div className="px-4 space-y-3">
@@ -26,7 +26,7 @@ export default function HomePage() {
               <ListingCard key={listing.id} listing={listing} />
             ))
           ) : (
-            <div className="bg-white rounded-2xl border border-black/7 shadow-card">
+            <div className="bg-white/80 backdrop-blur-sm rounded-2xl border border-black/7 shadow-card">
               <EmptyState icon={SearchX} message={t('listing.no_listings')} />
             </div>
           )}

@@ -23,7 +23,7 @@ export default function ListingCard({ listing }: Props) {
     <button
       onClick={() => navigate(`/listing/${listing.id}`)}
       className={cn(
-        'w-full text-left transition-all duration-300 rounded-2xl overflow-hidden bg-white border',
+        'w-full text-left transition-all duration-300 rounded-2xl overflow-hidden bg-white/82 backdrop-blur-sm border',
         isPremium
           ? 'border-[#c9a84c]/40 shadow-[0_0_24px_rgba(201,168,76,0.14)] hover:border-[#c9a84c]/60'
           : isBasic
