@@ -464,3 +464,125 @@ nav.fixed {
 .safe-bottom {
   padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
 }
+
+/* ============================================
+   AURORA GRADIENT LINES — per-page backgrounds
+   Thin animated gradient bands that slowly shift
+   vertically, colors from the hero palette.
+   ============================================ */
+
+@keyframes aurora-shift {
+  0%   { background-position: 50% 0%; }
+  50%  { background-position: 50% 100%; }
+  100% { background-position: 50% 0%; }
+}
+
+/* Shared wrapper: fixed full-bleed, behind all content */
+.aurora-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-size: 100% 400%;
+  animation: aurora-shift var(--aurora-speed, 14s) ease-in-out infinite;
+}
+
+/* Home / catalog — warm gold tone */
+.aurora-home {
+  --aurora-speed: 14s;
+  background-image: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    rgba(201,168,76,0.07) 25%,
+    #ffffff 50%,
+    rgba(201,168,76,0.04) 75%,
+    #ffffff 100%
+  );
+}
+
+/* Category — gold + nature green */
+.aurora-category {
+  --aurora-speed: 16s;
+  background-image: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    rgba(201,168,76,0.06) 20%,
+    rgba(110,170,100,0.04) 50%,
+    rgba(201,168,76,0.05) 80%,
+    #ffffff 100%
+  );
+}
+
+/* Listing detail — warm gold, slightly richer */
+.aurora-detail {
+  --aurora-speed: 18s;
+  background-image: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    rgba(201,168,76,0.08) 30%,
+    #ffffff 55%,
+    rgba(180,150,80,0.04) 80%,
+    #ffffff 100%
+  );
+}
+
+/* Cabinet — gold accent, neutral */
+.aurora-cabinet {
+  --aurora-speed: 20s;
+  background-image: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    rgba(201,168,76,0.06) 25%,
+    #ffffff 50%,
+    rgba(201,168,76,0.03) 75%,
+    #ffffff 100%
+  );
+}
+
+/* Chat — cooler blue-gray tone */
+.aurora-chat {
+  --aurora-speed: 12s;
+  background-image: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    rgba(90,140,210,0.05) 25%,
+    #ffffff 50%,
+    rgba(201,168,76,0.04) 75%,
+    #ffffff 100%
+  );
+}
+
+/* Admin — neutral with subtle gold */
+.aurora-admin {
+  --aurora-speed: 22s;
+  background-image: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    rgba(201,168,76,0.05) 30%,
+    rgba(90,140,210,0.03) 60%,
+    #ffffff 100%
+  );
+}
+
+/* Add / Edit — soft gold */
+.aurora-form {
+  --aurora-speed: 16s;
+  background-image: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    rgba(201,168,76,0.06) 35%,
+    #ffffff 70%,
+    rgba(201,168,76,0.03) 100%
+  );
+}
+
+/* Map — very subtle, map is already visual */
+.aurora-map {
+  --aurora-speed: 24s;
+  background-image: linear-gradient(
+    180deg,
+    rgba(201,168,76,0.03) 0%,
+    #ffffff 40%,
+    rgba(201,168,76,0.02) 100%
+  );
+}
