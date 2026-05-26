@@ -39,41 +39,46 @@ export default function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 ui-nav-dock border-b border-glass-border">
+    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-lg border-b border-black/7">
       <div className="px-4 py-3">
+        {/* Top row: logo + actions */}
         <div className="flex items-center justify-between mb-3">
           <button
             type="button"
             onClick={() => navigate('/')}
             className="flex items-center gap-2.5 group"
           >
-            <div className="ui-icon-box ui-icon-box--md bg-gradient-to-br from-royal to-royal-dark border-royal/40 group-hover:scale-105 transition-transform">
-              <span className="text-base font-display font-bold text-white">Б</span>
+            <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-black text-white font-serif font-normal text-base hover:scale-105 transition-transform">
+              Б
             </div>
             <div>
-              <h1 className="text-sm font-display font-bold text-white leading-tight">Брашов</h1>
-              <p className="text-[10px] text-amber font-semibold tracking-widest uppercase">
-                Український
+              <h1 className="text-sm font-serif font-normal text-black leading-tight tracking-tight">
+                Брашов
+              </h1>
+              <p className="text-[9px] text-muted font-medium tracking-[0.12em] uppercase">
+                Українськийй
               </p>
             </div>
           </button>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5">
             <NotificationBell />
+
+            {/* Language picker */}
             <div ref={langRef} className="relative">
               <button
                 type="button"
                 onClick={() => setShowLangMenu(!showLangMenu)}
                 className={cn(
-                  'ui-btn-icon flex items-center gap-2 px-2.5 h-9',
-                  showLangMenu && 'border-royal/40'
+                  'ui-btn-icon flex items-center gap-1.5 px-2.5 h-9',
+                  showLangMenu && 'bg-black/5 border-black/14'
                 )}
               >
                 <LangCode code={language} />
-                <Globe size={14} className="text-white/50" />
+                <Globe size={13} className="text-muted" />
               </button>
               {showLangMenu && (
-                <div className="absolute right-0 top-full mt-2 glass-panel p-1.5 min-w-[168px] animate-fade-in z-[60]">
+                <div className="absolute right-0 top-full mt-2 bg-white border border-black/8 rounded-2xl shadow-card p-1.5 min-w-[168px] z-[60] animate-fade-in">
                   {LANG_OPTIONS.map((lang) => (
                     <button
                       key={lang.code}
@@ -82,8 +87,8 @@ export default function Header() {
                       className={cn(
                         'w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm transition-all',
                         language === lang.code
-                          ? 'bg-royal/20 text-royal-light ui-surface'
-                          : 'text-white/70 hover:bg-white/5'
+                          ? 'bg-black text-white font-medium'
+                          : 'text-foreground hover:bg-black/5'
                       )}
                     >
                       <LangCode code={lang.code} />
@@ -93,11 +98,13 @@ export default function Header() {
                 </div>
               )}
             </div>
+
+            {/* Profile avatar */}
             {profile && (
               <button
                 type="button"
                 onClick={() => navigate('/cabinet')}
-                className="ui-icon-box ui-icon-box--md border-amber/35 text-amber font-bold text-sm hover:border-amber/50"
+                className="flex items-center justify-center w-9 h-9 rounded-xl bg-black/6 border border-black/8 text-foreground font-serif font-normal text-sm hover:bg-black/10 transition-colors"
               >
                 {profile.first_name.charAt(0)}
               </button>
@@ -105,12 +112,13 @@ export default function Header() {
           </div>
         </div>
 
+        {/* Search bar */}
         <div className={cn('relative transition-transform duration-200', searchFocused && 'scale-[1.01]')}>
           <Search
-            size={18}
+            size={16}
             className={cn(
-              'absolute left-3.5 top-1/2 -translate-y-1/2 z-10',
-              searchFocused ? 'text-royal-light' : 'text-white/30'
+              'absolute left-3.5 top-1/2 -translate-y-1/2 z-10 transition-colors',
+              searchFocused ? 'text-black' : 'text-black/30'
             )}
           />
           <input
@@ -126,9 +134,9 @@ export default function Header() {
             <button
               type="button"
               onClick={() => setFilters({ query: '' })}
-              className="ui-btn-icon absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8"
+              className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-lg hover:bg-black/5 transition-colors"
             >
-              <X size={14} className="text-white/50" />
+              <X size={13} className="text-muted" />
             </button>
           )}
         </div>
