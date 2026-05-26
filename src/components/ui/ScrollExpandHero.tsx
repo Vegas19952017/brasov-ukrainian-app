@@ -92,14 +92,14 @@ export default function ScrollExpandHero({
 
   if (expanded) {
     return (
-      <div className="min-h-screen bg-white animate-fade-in">
+      <div className="min-h-screen animate-fade-in">
         {children}
       </div>
     );
   }
 
   return (
-    <div className="relative min-h-screen w-full overflow-hidden bg-white">
+    <div className="relative min-h-screen w-full overflow-hidden">
 
       {/* Video layer */}
       <div className="absolute inset-0 z-0">

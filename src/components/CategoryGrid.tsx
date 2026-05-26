@@ -78,7 +78,7 @@ export default function CategoryGrid({ compact = false }: Props) {
             'flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border shrink-0 transition-all',
             !selectedCategorySlug
               ? 'bg-black text-white border-black'
-              : 'bg-white text-muted border-black/10 hover:border-black/20',
+              : 'bg-white/75 backdrop-blur-sm text-muted border-black/10 hover:border-black/20',
           )}
         >
           <LayoutGrid size={13} />
@@ -96,7 +96,7 @@ export default function CategoryGrid({ compact = false }: Props) {
                 'flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border shrink-0 transition-all',
                 isActive
                   ? 'bg-black text-white border-black'
-                  : 'bg-white text-muted border-black/10 hover:border-black/20',
+                  : 'bg-white/75 backdrop-blur-sm text-muted border-black/10 hover:border-black/20',
               )}
             >
               <Icon size={13} />
@@ -134,7 +134,7 @@ export default function CategoryGrid({ compact = false }: Props) {
                 'flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-semibold shrink-0 border transition-all duration-200',
                 isActive
                   ? 'bg-black text-white border-black scale-[1.03]'
-                  : 'bg-white text-muted border-black/10 hover:border-black/20 hover:text-black',
+                  : 'bg-white/75 backdrop-blur-sm text-muted border-black/10 hover:border-black/20 hover:text-black',
               )}
             >
               <TabIcon size={12} />
@@ -162,7 +162,7 @@ export default function CategoryGrid({ compact = false }: Props) {
                 key={cat.id}
                 type="button"
                 onClick={() => handleCategoryClick(cat)}
-                className="group flex flex-col items-center gap-2 p-3 rounded-2xl bg-white border border-black/7 hover:border-black/14 hover:-translate-y-1 hover:shadow-card transition-all duration-200 cursor-pointer"
+                className="group flex flex-col items-center gap-2 p-3 rounded-2xl bg-white/80 backdrop-blur-sm border border-black/7 hover:border-black/14 hover:-translate-y-1 hover:shadow-card transition-all duration-200 cursor-pointer"
               >
                 <div className={cn(
                   'flex items-center justify-center w-11 h-11 rounded-xl',
