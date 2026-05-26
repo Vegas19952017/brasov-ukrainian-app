@@ -69,7 +69,7 @@ export default function App() {
   }, [upsertProfile]);
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/brasov-ukrainian-app/">
       <AppShell />
     </BrowserRouter>
   );
