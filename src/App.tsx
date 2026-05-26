@@ -6,6 +6,7 @@ import { registerServiceWorker } from './lib/push';
 import { useStore } from './store';
 import Header from './components/Header';
 import BottomNav from './components/BottomNav';
+import PageBackground from './components/ui/PageBackground';
 import HomePage from './pages/HomePage';
 import CategoryPage from './pages/CategoryPage';
 import ListingDetailPage from './pages/ListingDetailPage';
@@ -56,6 +57,7 @@ function AppShell() {
 
   return (
     <div className="min-h-screen bg-white font-body flex flex-col">
+      <PageBackground />
       {showChrome && <Header />}
       <main className={showChrome ? 'flex-1 pb-20' : 'flex-1'}>
         <Routes>
