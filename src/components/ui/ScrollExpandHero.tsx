@@ -120,12 +120,12 @@ export default function ScrollExpandHero({
             willChange: 'opacity',
           }}
         />
-        {/* Gradient overlays over video */}
+        {/* Gradient overlays over video — fade to match body's sage-white #F7FAF7 */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              'linear-gradient(to bottom, rgba(255,255,255,0.90) 0%, rgba(255,255,255,0.55) 22%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.30) 75%, rgba(255,255,255,0.85) 100%)',
+              'linear-gradient(to bottom, rgba(247,250,247,0.92) 0%, rgba(247,250,247,0.50) 20%, rgba(247,250,247,0.06) 50%, rgba(247,250,247,0.28) 76%, rgba(247,250,247,0.88) 100%)',
           }}
         />
       </div>

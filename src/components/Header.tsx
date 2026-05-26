@@ -39,7 +39,7 @@ export default function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-lg border-b border-black/7">
+    <header className="sticky top-0 z-50 backdrop-blur-lg border-b border-black/7" style={{ background: 'rgba(247,250,247,0.92)' }}>
       <div className="px-4 py-3">
         {/* Top row: logo + actions */}
         <div className="flex items-center justify-between mb-3">
