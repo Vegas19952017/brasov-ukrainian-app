@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
+import { authenticate } from './lib/auth';
+import { registerServiceWorker } from './lib/push';
 import { useStore } from './store';
-import { getTelegramUser } from './lib/supabase';
 import Header from './components/Header';
 import BottomNav from './components/BottomNav';
 import HomePage from './pages/HomePage';
@@ -14,15 +15,6 @@ import CabinetPage from './pages/CabinetPage';
 import AdminPage from './pages/AdminPage';
 import MapPage from './pages/MapPage';
 import ChatPage from './pages/ChatPage';
-import type { Profile } from './types';
-
-const DEMO_ADMIN_IDS = new Set(
-  (import.meta.env.VITE_ADMIN_TELEGRAM_IDS || '')
-    .split(',')
-    .map((s: string) => s.trim())
-    .filter(Boolean)
-    .map(Number)
-);
 
 export default function App() {
   const { upsertProfile, loadAppData } = useStore();
@@ -31,45 +23,26 @@ export default function App() {
     loadAppData();
   }, [loadAppData]);
 
+  // Authenticate via server-side HMAC validation (falls back to unsafe/demo)
   useEffect(() => {
-    const tgUser = getTelegramUser();
-    const demoAdmin = import.meta.env.VITE_DEMO_ADMIN === 'true';
-
-    if (tgUser) {
-      const isAdmin =
-        DEMO_ADMIN_IDS.has(tgUser.id) ||
-        tgUser.username === import.meta.env.VITE_ADMIN_USERNAME;
-      const profile: Profile = {
-        id: `tg-${tgUser.id}`,
-        telegram_id: tgUser.id,
-        username: tgUser.username || null,
-        first_name: tgUser.first_name,
-        role: isAdmin ? 'admin' : 'user',
-        status: isAdmin ? 'approved' : 'pending',
-        created_at: new Date().toISOString(),
-      };
+    authenticate().then(({ profile }) => {
+      if (!profile) return;
       const existing = useStore.getState().profiles.find((p) => p.id === profile.id);
       if (existing) {
         upsertProfile({ ...existing, ...profile, status: existing.status, role: profile.role });
       } else {
         upsertProfile(profile);
       }
-    } else {
-      const profile: Profile = {
-        id: 'user-demo',
-        telegram_id: 123456789,
-        username: 'demo_user',
-        first_name: 'Демо',
-        role: demoAdmin ? 'admin' : 'user',
-        status: 'approved',
-        created_at: new Date().toISOString(),
-      };
-      upsertProfile(profile);
-    }
+    });
   }, [upsertProfile]);
 
+  // Register Service Worker for Web Push
+  useEffect(() => {
+    registerServiceWorker();
+  }, []);
+
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/brasov-ukrainian-app/">
       <AppShell />
     </BrowserRouter>
   );

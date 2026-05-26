@@ -8,7 +8,7 @@ export default {
     extend: {
       colors: {
         obsidian: {
-          DEFAULT: '#090a0f',
+          DEFAULT: '#0d0f1a',
           50: '#f0f1f5',
           100: '#e1e3eb',
           200: '#c3c7d7',
@@ -17,9 +17,9 @@ export default {
           500: '#69739b',
           600: '#4b577b',
           700: '#2d3b5b',
-          800: '#11131c',
-          900: '#090a0f',
-          950: '#040508',
+          800: '#131520',
+          900: '#0d0f1a',
+          950: '#07080f',
         },
         royal: {
           DEFAULT: '#2563eb',
@@ -27,11 +27,26 @@ export default {
           dark: '#1d4ed8',
           glow: 'rgba(37, 99, 235, 0.3)',
         },
+        // LUMINA antique gold — warmer and deeper than pure yellow
+        lumina: {
+          DEFAULT: '#c9a84c',
+          light: '#e8c96a',
+          dark: '#a07c2e',
+          muted: '#c9a84c40',
+          glow: 'rgba(201, 168, 76, 0.35)',
+        },
         amber: {
           DEFAULT: '#eab308',
           light: '#facc15',
           dark: '#ca8a04',
           glow: 'rgba(234, 179, 8, 0.3)',
+        },
+        // LUMINA twilight violet — mountain sunset accent
+        violet: {
+          DEFAULT: '#8b5cf6',
+          light: '#a78bfa',
+          dark: '#6d28d9',
+          glow: 'rgba(139, 92, 246, 0.3)',
         },
         crimson: {
           DEFAULT: '#dc2626',
@@ -40,9 +55,9 @@ export default {
           glow: 'rgba(220, 38, 38, 0.3)',
         },
         glass: {
-          DEFAULT: 'rgba(17, 19, 28, 0.7)',
-          border: 'rgba(255, 255, 255, 0.08)',
-          hover: 'rgba(17, 19, 28, 0.85)',
+          DEFAULT: 'rgba(15, 16, 26, 0.72)',
+          border: 'rgba(201, 168, 76, 0.09)',
+          hover: 'rgba(15, 16, 26, 0.88)',
         },
       },
       fontFamily: {
@@ -53,11 +68,13 @@ export default {
         glass: '16px',
       },
       boxShadow: {
-        'gold-glow': '0 0 20px rgba(234, 179, 8, 0.4), 0 0 40px rgba(234, 179, 8, 0.15)',
-        'blue-glow': '0 0 20px rgba(37, 99, 235, 0.4), 0 0 40px rgba(37, 99, 235, 0.15)',
-        'red-glow': '0 0 20px rgba(220, 38, 38, 0.4), 0 0 40px rgba(220, 38, 38, 0.15)',
-        'glass': '0 8px 32px rgba(0, 0, 0, 0.4)',
-        'card': '0 4px 24px rgba(0, 0, 0, 0.3)',
+        'gold-glow':   '0 0 20px rgba(234, 179, 8, 0.4), 0 0 40px rgba(234, 179, 8, 0.15)',
+        'lumina-glow': '0 0 24px rgba(201, 168, 76, 0.4), 0 0 56px rgba(201, 168, 76, 0.15)',
+        'violet-glow': '0 0 20px rgba(139, 92, 246, 0.35), 0 0 40px rgba(139, 92, 246, 0.12)',
+        'blue-glow':   '0 0 20px rgba(37, 99, 235, 0.4), 0 0 40px rgba(37, 99, 235, 0.15)',
+        'red-glow':    '0 0 20px rgba(220, 38, 38, 0.4), 0 0 40px rgba(220, 38, 38, 0.15)',
+        'glass':       '0 8px 32px rgba(0, 0, 0, 0.4)',
+        'card':        '0 4px 24px rgba(0, 0, 0, 0.3)',
       },
       animation: {
         'pulse-gold': 'pulseGold 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
