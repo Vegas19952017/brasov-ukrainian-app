@@ -30,7 +30,14 @@
   }
 
   body {
-    background: #FFFFFF;
+    /* Nature mesh gradient: forest green (top-left) + mountain blue (bottom-right) + meadow sage (center) */
+    background:
+      radial-gradient(ellipse 75% 55% at 2% 2%,   rgba(60,120,70,0.10)  0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 98% 98%,  rgba(85,130,175,0.09) 0%, transparent 58%),
+      radial-gradient(ellipse 65% 65% at 28% 80%,  rgba(120,155,90,0.07) 0%, transparent 65%),
+      radial-gradient(ellipse 55% 45% at 75% 20%,  rgba(140,185,210,0.06) 0%, transparent 55%),
+      #F7FAF7;  /* very light sage-white base */
+    background-attachment: fixed;
     color: #000000;
     min-height: 100vh;
   }
@@ -55,7 +62,9 @@
 
   /* ─── Cards & Surfaces ─── */
   .ui-surface {
-    background: #FFFFFF;
+    background: rgba(255, 255, 255, 0.78);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border: 1px solid rgba(0, 0, 0, 0.07);
     box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.05);
   }
@@ -93,7 +102,9 @@
   /* ─── Inputs ─── */
   .input-glass {
     @apply block w-full rounded-xl px-4 py-2 text-sm text-foreground;
-    background: #FAFAFA;
+    background: rgba(255,255,255,0.70);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     border: 1px solid rgba(0, 0, 0, 0.10);
     outline: none;
     transition: border-color 0.15s, box-shadow 0.15s;
@@ -104,7 +115,7 @@
   .input-glass:focus {
     border-color: rgba(0, 0, 0, 0.3);
     box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
-    background: #FFFFFF;
+    background: rgba(255,255,255,0.92);
   }
 
   /* ─── Buttons ─── */
@@ -335,94 +346,103 @@
   animation: aurora-shift var(--aurora-speed, 14s) ease-in-out infinite;
 }
 
+/* Home / catalog — forest canopy: green + gold light */
 .aurora-home {
   --aurora-speed: 14s;
   background-image: linear-gradient(
     180deg,
-    #ffffff 0%,
-    rgba(201,168,76,0.07) 25%,
-    #ffffff 50%,
-    rgba(201,168,76,0.04) 75%,
-    #ffffff 100%
+    transparent 0%,
+    rgba(60,120,70,0.09)  22%,
+    rgba(201,168,76,0.07) 50%,
+    rgba(120,155,90,0.06) 78%,
+    transparent 100%
   );
 }
 
+/* Category — mountain meadow: sage + sky */
 .aurora-category {
   --aurora-speed: 16s;
   background-image: linear-gradient(
     180deg,
-    #ffffff 0%,
-    rgba(201,168,76,0.06) 20%,
-    rgba(110,170,100,0.04) 50%,
-    rgba(201,168,76,0.05) 80%,
-    #ffffff 100%
+    transparent 0%,
+    rgba(120,155,90,0.08)  20%,
+    rgba(85,130,175,0.07)  50%,
+    rgba(60,120,70,0.06)   80%,
+    transparent 100%
   );
 }
 
+/* Listing detail — forest depth: deep green + gold sun */
 .aurora-detail {
   --aurora-speed: 18s;
   background-image: linear-gradient(
     180deg,
-    #ffffff 0%,
-    rgba(201,168,76,0.08) 30%,
-    #ffffff 55%,
-    rgba(180,150,80,0.04) 80%,
-    #ffffff 100%
+    transparent 0%,
+    rgba(40,100,55,0.10)   25%,
+    rgba(201,168,76,0.08)  55%,
+    rgba(90,140,80,0.07)   80%,
+    transparent 100%
   );
 }
 
+/* Cabinet — mountain sunrise: warm sage + blue mist */
 .aurora-cabinet {
   --aurora-speed: 20s;
   background-image: linear-gradient(
     180deg,
-    #ffffff 0%,
-    rgba(201,168,76,0.06) 25%,
-    #ffffff 50%,
-    rgba(201,168,76,0.03) 75%,
-    #ffffff 100%
+    transparent 0%,
+    rgba(140,185,210,0.08) 25%,
+    rgba(120,155,90,0.07)  55%,
+    rgba(85,130,175,0.06)  80%,
+    transparent 100%
   );
 }
 
+/* Chat — mountain sky: clear blue + distant green */
 .aurora-chat {
   --aurora-speed: 12s;
   background-image: linear-gradient(
     180deg,
-    #ffffff 0%,
-    rgba(90,140,210,0.05) 25%,
-    #ffffff 50%,
-    rgba(201,168,76,0.04) 75%,
-    #ffffff 100%
+    transparent 0%,
+    rgba(85,130,175,0.10)  25%,
+    rgba(140,185,210,0.07) 55%,
+    rgba(120,155,90,0.05)  80%,
+    transparent 100%
   );
 }
 
+/* Admin — stone & mist: cool blue-gray */
 .aurora-admin {
   --aurora-speed: 22s;
   background-image: linear-gradient(
     180deg,
-    #ffffff 0%,
-    rgba(201,168,76,0.05) 30%,
-    rgba(90,140,210,0.03) 60%,
-    #ffffff 100%
+    transparent 0%,
+    rgba(100,120,150,0.08) 30%,
+    rgba(85,130,175,0.06)  60%,
+    transparent 100%
   );
 }
 
+/* Add/Edit forms — soft meadow: gentle sage */
 .aurora-form {
   --aurora-speed: 16s;
   background-image: linear-gradient(
     180deg,
-    #ffffff 0%,
-    rgba(201,168,76,0.06) 35%,
-    #ffffff 70%,
-    rgba(201,168,76,0.03) 100%
+    transparent 0%,
+    rgba(120,155,90,0.09)  30%,
+    rgba(60,120,70,0.06)   65%,
+    transparent 100%
   );
 }
 
+/* Map — terrain tint: barely visible, map is the hero */
 .aurora-map {
   --aurora-speed: 24s;
   background-image: linear-gradient(
     180deg,
-    rgba(201,168,76,0.03) 0%,
-    #ffffff 40%,
-    rgba(201,168,76,0.02) 100%
+    transparent 0%,
+    rgba(85,130,175,0.04) 40%,
+    rgba(60,120,70,0.03)  80%,
+    transparent 100%
   );
 }
