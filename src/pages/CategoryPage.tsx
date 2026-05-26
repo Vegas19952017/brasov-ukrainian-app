@@ -29,10 +29,10 @@ export default function CategoryPage() {
       {/* Category title */}
       {category && (
         <div className="px-4">
-          <h2 className="text-lg font-display font-bold text-white">
+          <h2 className="text-lg font-display font-bold text-foreground">
             {getLocalizedName(category, i18n.language)}
           </h2>
-          <p className="text-xs text-white/40 mt-0.5">
+          <p className="text-xs text-muted mt-0.5">
             {listings.length} {t('cabinet.total_listings').toLowerCase()}
           </p>
         </div>

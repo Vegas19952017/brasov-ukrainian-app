@@ -78,28 +78,28 @@ export default function MapPage() {
         : '';
 
       const priceHtml = listing.price !== null
-        ? `<div style="color:#eab308;font-weight:700;font-size:14px;margin-top:4px;">${formatPrice(listing.price, listing.currency)}</div>`
+        ? `<div style="color:#c9a84c;font-weight:700;font-size:14px;margin-top:4px;">${formatPrice(listing.price, listing.currency)}</div>`
         : '';
 
       marker.bindPopup(`
-        <div style="min-width:200px;max-width:250px;font-family:'Plus Jakarta Sans',sans-serif;">
+        <div style="min-width:200px;max-width:250px;font-family:'Inter',sans-serif;">
           ${photoHtml}
-          <div style="font-weight:600;font-size:14px;color:#fff;line-height:1.3;">${listing.title}</div>
-          <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:4px;line-height:1.4;">
+          <div style="font-weight:600;font-size:14px;color:#000;line-height:1.3;">${listing.title}</div>
+          <div style="font-size:11px;color:#6F6F6F;margin-top:4px;line-height:1.4;">
             ${listing.description.slice(0, 80)}…
           </div>
           ${priceHtml}
-          ${listing.address_text ? `<div style="font-size:10px;color:rgba(255,255,255,0.35);margin-top:6px;">${listing.address_text}</div>` : ''}
+          ${listing.address_text ? `<div style="font-size:10px;color:#9ca3af;margin-top:6px;">${listing.address_text}</div>` : ''}
           <button
             onclick="window.__navigateToListing('${listing.id}')"
             style="
               margin-top:10px;
               width:100%;
               padding:8px;
-              background:linear-gradient(135deg,#2563eb,#1d4ed8);
+              background:#000000;
               color:white;
               border:none;
-              border-radius:8px;
+              border-radius:20px;
               font-size:12px;
               font-weight:600;
               cursor:pointer;
@@ -135,19 +135,19 @@ export default function MapPage() {
       {/* Map title bar */}
       <div className="absolute top-3 left-3 right-3 z-[1000] flex items-center justify-between">
         <div className="glass-panel px-4 py-2.5 flex items-center gap-2">
-          <MapPin size={16} className="text-royal-light" />
-          <span className="text-sm font-display font-bold text-white">{t('map.title')}</span>
-          <span className="text-[10px] text-white/40 ml-1 font-medium">
+          <MapPin size={16} className="text-black/60" />
+          <span className="text-sm font-display font-bold text-foreground">{t('map.title')}</span>
+          <span className="text-[10px] text-muted ml-1 font-medium">
             {geoListings.length}
           </span>
         </div>
 
         <button
           onClick={() => navigate('/')}
-          className="glass-panel px-3 py-2.5 flex items-center gap-1.5 hover:bg-glass-hover transition-colors"
+          className="glass-panel px-3 py-2.5 flex items-center gap-1.5 hover:bg-black/4 transition-colors"
         >
-          <List size={14} className="text-white/60" />
-          <span className="text-xs text-white/60 font-medium">{t('map.show_list')}</span>
+          <List size={14} className="text-muted" />
+          <span className="text-xs text-muted font-medium">{t('map.show_list')}</span>
         </button>
       </div>
 

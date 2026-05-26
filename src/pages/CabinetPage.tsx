@@ -25,7 +25,7 @@ export default function CabinetPage() {
   if (!profile) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <p className="text-white/40 text-sm">{t('chat.auth_required')}</p>
+        <p className="text-muted text-sm">{t('chat.auth_required')}</p>
       </div>
     );
   }
@@ -37,7 +37,6 @@ export default function CabinetPage() {
       ? approvedListings.reduce((sum, l) => sum + l.rating_avg, 0) / approvedListings.length
       : 0;
 
-  // NEW: collect all approved reviews received on my listings
   const myApprovedListingIds = approvedListings.map((l) => l.id);
   const receivedReviews = reviews
     .filter((r) => myApprovedListingIds.includes(r.listing_id) && r.status === 'approved')
@@ -55,28 +54,28 @@ export default function CabinetPage() {
       {/* Profile header */}
       <div className="glass-panel p-5">
         <div className="flex items-center gap-4">
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-royal to-amber flex items-center justify-center text-white text-xl font-bold shadow-blue-glow">
+          <div className="w-14 h-14 rounded-2xl bg-black flex items-center justify-center text-white text-xl font-bold">
             {profile.first_name.charAt(0)}
           </div>
           <div className="flex-1">
-            <h2 className="text-lg font-display font-bold text-white">
+            <h2 className="text-lg font-display font-bold text-foreground">
               {profile.first_name}
             </h2>
             {profile.username && (
-              <p className="text-xs text-white/40 mt-0.5">@{profile.username}</p>
+              <p className="text-xs text-muted mt-0.5">@{profile.username}</p>
             )}
             <span
               className={cn(
                 'inline-flex items-center gap-1 mt-1.5 text-[10px] font-bold rounded-full px-2 py-0.5 border',
-                statusKey === 'approved' && 'text-emerald-400 bg-emerald-500/15 border-emerald-500/30',
-                statusKey === 'pending' && 'text-amber bg-amber/15 border-amber/30',
-                statusKey === 'rejected' && 'text-crimson-light bg-crimson/15 border-crimson/30',
+                statusKey === 'approved' && 'text-emerald-600 bg-emerald-50 border-emerald-200',
+                statusKey === 'pending' && 'text-[#c9a84c] bg-[#c9a84c]/10 border-[#c9a84c]/25',
+                statusKey === 'rejected' && 'text-red-500 bg-red-50 border-red-200',
               )}
             >
               {t(`profile.status_${statusKey}`)}
             </span>
             {profile.role === 'admin' && (
-              <span className="inline-flex items-center gap-1 mt-1 text-[10px] font-bold text-royal-light bg-royal/15 border border-royal/30 rounded-full px-2 py-0.5 ml-1">
+              <span className="inline-flex items-center gap-1 mt-1 text-[10px] font-bold text-black bg-black/7 border border-black/12 rounded-full px-2 py-0.5 ml-1">
                 Admin
               </span>
             )}
@@ -87,22 +86,22 @@ export default function CabinetPage() {
         <div className="grid grid-cols-2 gap-3 mt-5">
           <div className="ui-tile min-h-0 p-3.5 text-center !items-center">
             <div className="flex items-center justify-center gap-1.5 mb-1">
-              <FileText size={14} className="text-royal-light" />
-              <span className="text-[10px] text-white/40 uppercase tracking-wider">{t('cabinet.total_listings')}</span>
+              <FileText size={14} className="text-muted" />
+              <span className="text-[10px] text-black/40 uppercase tracking-wider">{t('cabinet.total_listings')}</span>
             </div>
-            <p className="text-2xl font-bold text-white">{myListings.length}</p>
+            <p className="text-2xl font-bold text-foreground">{myListings.length}</p>
           </div>
           <div className="ui-tile min-h-0 p-3.5 text-center !items-center">
             <div className="flex items-center justify-center gap-1.5 mb-1">
-              <Star size={14} className="text-amber" />
-              <span className="text-[10px] text-white/40 uppercase tracking-wider">{t('cabinet.rating')}</span>
+              <Star size={14} className="text-[#c9a84c]" />
+              <span className="text-[10px] text-black/40 uppercase tracking-wider">{t('cabinet.rating')}</span>
             </div>
-            <p className="text-2xl font-bold text-amber">{avgRating.toFixed(1)}</p>
+            <p className="text-2xl font-bold text-[#c9a84c]">{avgRating.toFixed(1)}</p>
           </div>
         </div>
       </div>
 
-      {/* NEW: Tabs: My Listings / My Reviews */}
+      {/* Tabs */}
       <div className="flex gap-2">
         <button
           type="button"
@@ -110,14 +109,17 @@ export default function CabinetPage() {
           className={cn(
             'flex-1 py-2.5 rounded-xl text-xs font-bold border transition-all duration-200 flex items-center justify-center gap-1.5',
             activeTab === 'listings'
-              ? 'bg-royal/20 text-royal-light border-royal/40'
-              : 'bg-obsidian-800/20 border-glass-border text-white/40'
+              ? 'bg-black text-white border-black'
+              : 'bg-white text-muted border-black/10 hover:border-black/20'
           )}
         >
           <FileText size={13} />
           {t('cabinet.my_listings')}
           {myListings.length > 0 && (
-            <span className="bg-royal/30 text-royal-light rounded-full text-[9px] font-black px-1.5 py-0.5 min-w-[18px] text-center">
+            <span className={cn(
+              'rounded-full text-[9px] font-black px-1.5 py-0.5 min-w-[18px] text-center',
+              activeTab === 'listings' ? 'bg-white/20 text-white' : 'bg-black/8 text-black/60'
+            )}>
               {myListings.length}
             </span>
           )}
@@ -128,14 +130,17 @@ export default function CabinetPage() {
           className={cn(
             'flex-1 py-2.5 rounded-xl text-xs font-bold border transition-all duration-200 flex items-center justify-center gap-1.5',
             activeTab === 'reviews'
-              ? 'bg-amber/20 text-amber border-amber/40'
-              : 'bg-obsidian-800/20 border-glass-border text-white/40'
+              ? 'bg-black text-white border-black'
+              : 'bg-white text-muted border-black/10 hover:border-black/20'
           )}
         >
           <MessageSquare size={13} />
-          Мои отзывы
+          Мої відгуки
           {receivedReviews.length > 0 && (
-            <span className="bg-amber/30 text-amber rounded-full text-[9px] font-black px-1.5 py-0.5 min-w-[18px] text-center">
+            <span className={cn(
+              'rounded-full text-[9px] font-black px-1.5 py-0.5 min-w-[18px] text-center',
+              activeTab === 'reviews' ? 'bg-white/20 text-white' : 'bg-[#c9a84c]/15 text-[#c9a84c]'
+            )}>
               {receivedReviews.length}
             </span>
           )}
@@ -146,10 +151,10 @@ export default function CabinetPage() {
       {activeTab === 'listings' && (
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <h3 className="text-sm font-display font-bold text-white">{t('cabinet.my_listings')}</h3>
+            <h3 className="text-sm font-display font-bold text-foreground">{t('cabinet.my_listings')}</h3>
             <button
               onClick={() => navigate('/add')}
-              className="flex items-center gap-1.5 text-xs text-royal-light font-semibold hover:underline"
+              className="flex items-center gap-1.5 text-xs text-muted font-semibold hover:text-black"
             >
               <Plus size={14} />
               {t('add_listing.title')}
@@ -162,50 +167,48 @@ export default function CabinetPage() {
                 key={listing.id}
                 className={cn(
                   'glass-panel p-4 space-y-3',
-                  listing.is_featured && 'featured-glow border-amber/30'
+                  listing.is_featured && 'featured-glow border-[#c9a84c]/30'
                 )}
               >
                 <div className="flex items-start justify-between">
                   <div className="flex-1 min-w-0">
-                    <h4 className="text-sm font-semibold text-white line-clamp-1">
+                    <h4 className="text-sm font-semibold text-foreground line-clamp-1">
                       {listing.title}
                     </h4>
-                    <p className="text-xs text-white/40 mt-1 line-clamp-1">
+                    <p className="text-xs text-muted mt-1 line-clamp-1">
                       {listing.description}
                     </p>
                   </div>
                   <StatusBadge status={listing.status} />
                 </div>
 
-                {/* NEW: show rejection reason if present */}
                 {listing.status === 'rejected' && listing.rejection_reason && (
-                  <div className="flex items-start gap-2 bg-crimson/10 border border-crimson/20 rounded-xl p-3">
-                    <AlertCircle size={14} className="text-crimson-light shrink-0 mt-0.5" />
+                  <div className="flex items-start gap-2 bg-red-50 border border-red-200 rounded-xl p-3">
+                    <AlertCircle size={14} className="text-red-500 shrink-0 mt-0.5" />
                     <div>
-                      <p className="text-[10px] font-bold text-crimson-light">Причина отклонения:</p>
-                      <p className="text-xs text-white/60 mt-0.5 leading-relaxed">{listing.rejection_reason}</p>
+                      <p className="text-[10px] font-bold text-red-600">Причина відхилення:</p>
+                      <p className="text-xs text-black/60 mt-0.5 leading-relaxed">{listing.rejection_reason}</p>
                     </div>
                   </div>
                 )}
 
-                {/* NEW: friendly hint for pending listings */}
                 {listing.status === 'pending' && (
-                  <div className="flex items-center gap-2 bg-amber/5 border border-amber/15 rounded-xl px-3 py-2">
-                    <Clock size={12} className="text-amber shrink-0" />
-                    <p className="text-[10px] text-amber/80">На проверке у модератора. Обычно 1–24 часа.</p>
+                  <div className="flex items-center gap-2 bg-[#c9a84c]/6 border border-[#c9a84c]/20 rounded-xl px-3 py-2">
+                    <Clock size={12} className="text-[#c9a84c] shrink-0" />
+                    <p className="text-[10px] text-[#c9a84c]/80">На перевірці у модератора. Зазвичай 1–24 години.</p>
                   </div>
                 )}
 
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     {listing.price !== null && (
-                      <span className="text-sm font-bold text-amber">
+                      <span className="text-sm font-bold text-[#c9a84c]">
                         {formatPrice(listing.price, listing.currency)}
                       </span>
                     )}
                     <StarRating rating={listing.rating_avg} size={12} />
                   </div>
-                  <span className="text-[10px] text-white/30">
+                  <span className="text-[10px] text-black/30">
                     {timeAgo(listing.created_at, i18n.language)}
                   </span>
                 </div>
@@ -223,11 +226,11 @@ export default function CabinetPage() {
                     className="btn-ghost text-xs flex items-center gap-1 flex-1 justify-center"
                   >
                     <ChevronRight size={12} />
-                    Открыть
+                    Відкрити
                   </button>
                   <button
                     onClick={() => handleDelete(listing.id)}
-                    className="btn-ghost text-xs flex items-center gap-1 flex-1 justify-center text-crimson-light/70 border-crimson/20 hover:bg-crimson/10 hover:text-crimson-light"
+                    className="btn-ghost text-xs flex items-center gap-1 flex-1 justify-center text-red-500 border-red-200 hover:bg-red-50"
                   >
                     <Trash2 size={12} />
                     {t('cabinet.delete')}
@@ -238,33 +241,34 @@ export default function CabinetPage() {
           ) : (
             <div className="glass-panel">
               <EmptyState icon={ClipboardList} message={t('cabinet.no_listings')} />
-              <button
-                onClick={() => navigate('/add')}
-                className="btn-primary py-2 px-4 text-xs mt-2"
-              >
-                {t('add_listing.title')}
-              </button>
+              <div className="px-4 pb-4">
+                <button
+                  onClick={() => navigate('/add')}
+                  className="btn-primary py-2 px-4 text-xs w-full"
+                >
+                  {t('add_listing.title')}
+                </button>
+              </div>
             </div>
           )}
         </div>
       )}
 
-      {/* NEW Tab: Received Reviews */}
+      {/* Tab: Received Reviews */}
       {activeTab === 'reviews' && (
         <div className="space-y-3">
-          <h3 className="text-sm font-display font-bold text-white">Отзывы о моих услугах</h3>
+          <h3 className="text-sm font-display font-bold text-foreground">Відгуки про мої послуги</h3>
 
           {receivedReviews.length > 0 ? (
             receivedReviews.map((rev) => {
               const sourceListing = listings.find((l) => l.id === rev.listing_id);
               return (
-                <div key={rev.id} className="glass-panel p-4 space-y-3 border border-glass-border">
-                  {/* Listing reference */}
+                <div key={rev.id} className="glass-panel p-4 space-y-3">
                   {sourceListing && (
                     <button
                       type="button"
                       onClick={() => navigate(`/listing/${sourceListing.id}`)}
-                      className="flex items-center gap-1.5 text-[10px] text-royal-light font-semibold hover:underline"
+                      className="flex items-center gap-1.5 text-[10px] text-muted font-semibold hover:text-black hover:underline"
                     >
                       <ChevronRight size={11} />
                       {sourceListing.title}
@@ -273,45 +277,43 @@ export default function CabinetPage() {
 
                   <div className="flex items-center justify-between">
                     <div>
-                      <span className="text-xs font-bold text-white/80">
-                        {rev.profile?.first_name ?? 'Клиент'}
+                      <span className="text-xs font-bold text-black/80">
+                        {rev.profile?.first_name ?? 'Клієнт'}
                       </span>
                       {rev.profile?.username && (
-                        <span className="text-[10px] text-white/30 ml-1.5">@{rev.profile.username}</span>
+                        <span className="text-[10px] text-black/30 ml-1.5">@{rev.profile.username}</span>
                       )}
                     </div>
                     <div className="flex items-center gap-2">
                       <StarRating rating={rev.rating} size={13} />
-                      <span className="text-[10px] text-white/30">{timeAgo(rev.created_at, i18n.language)}</span>
+                      <span className="text-[10px] text-black/30">{timeAgo(rev.created_at, i18n.language)}</span>
                     </div>
                   </div>
 
                   {rev.comment && (
-                    <p className="text-xs text-white/60 leading-relaxed font-medium italic">
+                    <p className="text-xs text-black/60 leading-relaxed font-medium italic">
                       "{rev.comment}"
                     </p>
                   )}
 
-                  {/* Owner reply preview */}
                   {rev.owner_reply && (
-                    <div className="ml-3 pl-3 border-l-2 border-royal/40 py-0.5">
+                    <div className="ml-3 pl-3 border-l-2 border-black/15 py-0.5">
                       <div className="flex items-center gap-1.5 mb-1">
-                        <CornerDownRight size={10} className="text-royal-light" />
-                        <span className="text-[9px] font-bold text-royal-light">Ваш ответ</span>
+                        <CornerDownRight size={10} className="text-muted" />
+                        <span className="text-[9px] font-bold text-muted">Ваша відповідь</span>
                       </div>
-                      <p className="text-[11px] text-white/50 leading-relaxed italic">{rev.owner_reply}</p>
+                      <p className="text-[11px] text-black/50 leading-relaxed italic">{rev.owner_reply}</p>
                     </div>
                   )}
 
-                  {/* Prompt to reply if no reply yet */}
                   {!rev.owner_reply && (
                     <button
                       type="button"
                       onClick={() => navigate(`/listing/${rev.listing_id}`)}
-                      className="text-[10px] text-royal-light font-bold hover:underline flex items-center gap-1"
+                      className="text-[10px] text-muted font-bold hover:text-black hover:underline flex items-center gap-1"
                     >
                       <CornerDownRight size={10} />
-                      Ответить на отзыв
+                      Відповісти на відгук
                     </button>
                   )}
                 </div>
@@ -321,7 +323,7 @@ export default function CabinetPage() {
             <div className="glass-panel">
               <EmptyState
                 icon={MessageSquare}
-                message="Пока нет опубликованных отзывов о ваших услугах."
+                message="Поки немає опублікованих відгуків про ваші послуги."
                 className="py-10"
               />
             </div>

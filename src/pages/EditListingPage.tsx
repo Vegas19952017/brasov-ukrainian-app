@@ -160,16 +160,15 @@ export default function EditListingPage() {
 
   return (
     <div className="px-4 py-5 space-y-5 animate-fade-in pb-16">
-      <h2 className="text-lg font-display font-bold text-white">{t('add_listing.edit_title')}</h2>
+      <h2 className="text-lg font-display font-bold text-foreground">{t('add_listing.edit_title')}</h2>
 
-      {/* NEW: rejection reason banner — shown when listing was previously rejected */}
       {listing.status === 'rejected' && listing.rejection_reason && (
-        <div className="flex items-start gap-3 bg-crimson/10 border border-crimson/30 rounded-2xl p-4 animate-slide-up">
-          <AlertCircle size={18} className="text-crimson-light shrink-0 mt-0.5" />
+        <div className="flex items-start gap-3 bg-red-50 border border-red-200 rounded-2xl p-4 animate-slide-up">
+          <AlertCircle size={18} className="text-red-500 shrink-0 mt-0.5" />
           <div>
-            <p className="text-xs font-bold text-crimson-light">Причина предыдущего отклонения:</p>
-            <p className="text-sm text-white/70 mt-1 leading-relaxed">{listing.rejection_reason}</p>
-            <p className="text-[10px] text-white/30 mt-2">Исправьте замечания и отправьте повторно на модерацию.</p>
+            <p className="text-xs font-bold text-red-600">Причина попереднього відхилення:</p>
+            <p className="text-sm text-black/70 mt-1 leading-relaxed">{listing.rejection_reason}</p>
+            <p className="text-[10px] text-black/30 mt-2">Виправте зауваження і надішліть повторно на модерацію.</p>
           </div>
         </div>
       )}
@@ -177,7 +176,7 @@ export default function EditListingPage() {
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Category */}
         <div className="space-y-1.5">
-          <label className="text-xs text-white/50 font-bold uppercase tracking-wider">{t('add_listing.category_label')}</label>
+          <label className="text-xs text-muted font-bold uppercase tracking-wider">{t('add_listing.category_label')}</label>
           <select
             value={categoryId}
             onChange={(e) => setCategoryId(e.target.value)}
@@ -194,7 +193,7 @@ export default function EditListingPage() {
 
         {/* Title */}
         <div className="space-y-1.5">
-          <label className="text-xs text-white/50 font-bold uppercase tracking-wider">{t('add_listing.name_label')}</label>
+          <label className="text-xs text-muted font-bold uppercase tracking-wider">{t('add_listing.name_label')}</label>
           <input
             type="text"
             value={title}
@@ -207,11 +206,11 @@ export default function EditListingPage() {
         {/* Description with char counter */}
         <div className="space-y-1.5">
           <div className="flex items-center justify-between">
-            <label className="text-xs text-white/50 font-bold uppercase tracking-wider">{t('add_listing.description_label')}</label>
+            <label className="text-xs text-muted font-bold uppercase tracking-wider">{t('add_listing.description_label')}</label>
             <span className={cn(
               'text-[10px] font-semibold',
-              description.length < 100 ? 'text-crimson-light' :
-              description.length > 1000 ? 'text-amber' : 'text-white/30'
+              description.length < 100 ? 'text-red-500' :
+              description.length > 1000 ? 'text-[#c9a84c]' : 'text-black/30'
             )}>
               {description.length} / 1000
             </span>
@@ -229,7 +228,7 @@ export default function EditListingPage() {
         {/* Price + Currency */}
         <div className="grid grid-cols-3 gap-2">
           <div className="col-span-2 space-y-1.5">
-            <label className="text-xs text-white/50 font-bold uppercase tracking-wider">{t('add_listing.price_label')}</label>
+            <label className="text-xs text-muted font-bold uppercase tracking-wider">{t('add_listing.price_label')}</label>
             <input
               type="number"
               value={price}
@@ -238,14 +237,14 @@ export default function EditListingPage() {
             />
           </div>
           <div className="space-y-1.5">
-            <label className="text-xs text-white/50 font-bold uppercase tracking-wider">{t('add_listing.currency_label')}</label>
+            <label className="text-xs text-muted font-bold uppercase tracking-wider">{t('add_listing.currency_label')}</label>
             <div className="flex flex-col gap-1">
               {(['RON', 'EUR', 'UAH'] as const).map((cur) => (
                 <button
                   key={cur}
                   type="button"
                   onClick={() => setCurrency(cur)}
-                  className={cn('ui-chip py-2 text-center', currency === cur && 'ui-chip--active text-amber')}
+                  className={cn('ui-chip py-2 text-center', currency === cur && 'ui-chip--active')}
                 >
                   {cur}
                 </button>
@@ -256,17 +255,17 @@ export default function EditListingPage() {
 
         {/* Extended Specialist Fields */}
         {!isCarpooling && (
-          <div className="space-y-4 pt-3 border-t border-glass-border">
-            <h3 className="text-xs font-bold text-royal-light uppercase tracking-wider flex items-center gap-1.5">
+          <div className="space-y-4 pt-3 border-t border-black/7">
+            <h3 className="text-xs font-bold text-muted uppercase tracking-wider flex items-center gap-1.5">
               <Map size={14} />
-              Данные специалиста
+              Дані спеціаліста
             </h3>
 
             {/* Languages */}
             <div className="space-y-1.5">
-              <label className="text-[11px] text-white/50 font-bold uppercase tracking-wider flex items-center gap-1">
+              <label className="text-[11px] text-muted font-bold uppercase tracking-wider flex items-center gap-1">
                 <Languages size={12} />
-                Разговорные языки
+                Розмовні мови
               </label>
               <div className="flex gap-2">
                 {LANGUAGES.map((lang) => (
@@ -276,7 +275,7 @@ export default function EditListingPage() {
                     onClick={() => handleLanguageToggle(lang)}
                     className={cn(
                       'ui-chip py-2 flex-1 text-center',
-                      selectedLanguages.includes(lang) && 'ui-chip--active text-royal-light'
+                      selectedLanguages.includes(lang) && 'ui-chip--active'
                     )}
                   >
                     {lang}
@@ -287,15 +286,15 @@ export default function EditListingPage() {
 
             {/* Services */}
             <div className="space-y-1.5">
-              <label className="text-[11px] text-white/50 font-bold uppercase tracking-wider flex items-center gap-1">
+              <label className="text-[11px] text-muted font-bold uppercase tracking-wider flex items-center gap-1">
                 <HelpCircle size={12} />
-                Услуги (через запятую)
+                Послуги (через кому)
               </label>
               <input
                 type="text"
                 value={servicesInput}
                 onChange={(e) => setServicesInput(e.target.value)}
-                placeholder="напр.: Стрижка, Окрашивание"
+                placeholder="напр.: Стрижка, Фарбування"
                 className="input-glass py-3 text-sm"
                 autoComplete="off"
               />
@@ -303,9 +302,9 @@ export default function EditListingPage() {
 
             {/* Phone */}
             <div className="space-y-1.5">
-              <label className="text-[11px] text-white/50 font-bold uppercase tracking-wider flex items-center gap-1">
+              <label className="text-[11px] text-muted font-bold uppercase tracking-wider flex items-center gap-1">
                 <Phone size={12} />
-                Телефон (необязательно)
+                Телефон (необов'язково)
               </label>
               <input
                 type="tel"
@@ -317,11 +316,11 @@ export default function EditListingPage() {
               />
             </div>
 
-            {/* NEW: Portfolio / social links */}
+            {/* Portfolio / social links */}
             <div className="space-y-1.5">
-              <label className="text-[11px] text-white/50 font-bold uppercase tracking-wider flex items-center gap-1">
+              <label className="text-[11px] text-muted font-bold uppercase tracking-wider flex items-center gap-1">
                 <Link size={12} />
-                Соцсети / Портфолио (необязательно)
+                Соцмережі / Портфоліо (необов'язково)
               </label>
               <textarea
                 value={portfolioLinks}
@@ -330,13 +329,13 @@ export default function EditListingPage() {
                 rows={2}
                 className="input-glass py-2 text-xs resize-none"
               />
-              <p className="text-[10px] text-white/25">Instagram, Behance, LinkedIn, сайт и т.д. Видны только модератору при проверке.</p>
+              <p className="text-[10px] text-black/25">Видно тільки модератору при перевірці.</p>
             </div>
 
             {/* Districts */}
             <div className="space-y-1.5">
-              <label className="text-[11px] text-white/50 font-bold uppercase tracking-wider block">Районы работы (Брашов)</label>
-              <div className="flex flex-wrap gap-1.5 max-h-[160px] overflow-y-auto p-2 bg-obsidian-900/50 rounded-xl border border-glass-border">
+              <label className="text-[11px] text-muted font-bold uppercase tracking-wider block">Райони роботи (Брашов)</label>
+              <div className="flex flex-wrap gap-1.5 max-h-[160px] overflow-y-auto p-2 bg-black/3 rounded-xl border border-black/7">
                 {DISTRICTS.map((dist) => (
                   <button
                     key={dist}
@@ -345,11 +344,11 @@ export default function EditListingPage() {
                     className={cn(
                       'px-2.5 py-1.5 rounded-lg border text-[10px] font-medium transition-all duration-200',
                       selectedDistricts.includes(dist)
-                        ? 'bg-royal/20 text-royal-light border-royal/40'
-                        : 'bg-obsidian-800/40 text-white/50 border-glass-border hover:bg-glass-hover hover:text-white'
+                        ? 'bg-black text-white border-black'
+                        : 'bg-white text-black/50 border-black/10 hover:bg-black/5 hover:text-black'
                     )}
                   >
-                    {dist === 'Out of Town / Delivery' ? 'Выезд по городу' : dist}
+                    {dist === 'Out of Town / Delivery' ? 'Виїзд по місту' : dist}
                   </button>
                 ))}
               </div>
@@ -359,11 +358,11 @@ export default function EditListingPage() {
 
         {/* Photos */}
         <div className="space-y-2">
-          <label className="text-xs text-white/50 font-bold uppercase tracking-wider">{t('add_listing.photos_label')}</label>
+          <label className="text-xs text-muted font-bold uppercase tracking-wider">{t('add_listing.photos_label')}</label>
           {photos.length > 0 && (
             <div className="flex gap-2 overflow-x-auto pb-2">
               {photos.map((url, i) => (
-                <div key={i} className="relative shrink-0 w-20 h-20 rounded-xl overflow-hidden border border-glass-border">
+                <div key={i} className="relative shrink-0 w-20 h-20 rounded-xl overflow-hidden border border-black/10">
                   <img src={url} alt="" className="w-full h-full object-cover" />
                   <button
                     type="button"
@@ -378,7 +377,7 @@ export default function EditListingPage() {
           )}
           {photos.length < 5 && (
             <div className="flex gap-2 flex-wrap">
-              <input type="file" accept="image/*" onChange={handleFileUpload} className="text-xs text-white/50" />
+              <input type="file" accept="image/*" onChange={handleFileUpload} className="text-xs text-muted" />
               <input
                 type="url"
                 value={photoUrl}
@@ -386,7 +385,7 @@ export default function EditListingPage() {
                 placeholder="https://…"
                 className="input-glass py-2 text-xs flex-1 min-w-[120px]"
               />
-              <button type="button" onClick={addPhotoUrl} className="px-3 py-2 rounded-xl bg-royal/20 text-royal-light border border-royal/30">
+              <button type="button" onClick={addPhotoUrl} className="px-3 py-2 rounded-xl bg-black/6 text-black/60 border border-black/10 hover:bg-black/10">
                 <ImagePlus size={16} />
               </button>
             </div>
@@ -395,7 +394,7 @@ export default function EditListingPage() {
 
         {/* Telegram */}
         <div className="space-y-1.5">
-          <label className="text-xs text-white/50 font-bold uppercase tracking-wider">{t('add_listing.telegram_label')}</label>
+          <label className="text-xs text-muted font-bold uppercase tracking-wider">{t('add_listing.telegram_label')}</label>
           <input
             type="text"
             value={telegramUsername}
@@ -407,7 +406,7 @@ export default function EditListingPage() {
 
         {/* Address */}
         <div className="space-y-1.5">
-          <label className="text-xs text-white/50 font-bold uppercase tracking-wider flex items-center gap-1.5">
+          <label className="text-xs text-muted font-bold uppercase tracking-wider flex items-center gap-1.5">
             <MapPin size={12} />
             {t('add_listing.address_label')}
           </label>
@@ -432,7 +431,7 @@ export default function EditListingPage() {
         <button
           type="submit"
           disabled={submitting}
-          className="btn-primary w-full flex items-center justify-center gap-2 py-3.5 shadow-blue-glow font-bold"
+          className="btn-primary w-full flex items-center justify-center gap-2 py-3.5 font-bold"
         >
           <Send size={16} />
           {submitting ? t('add_listing.submitting') : t('common.save')}

@@ -31,15 +31,12 @@ export default function AddListingPage() {
   const [photos, setPhotos] = useState<string[]>([]);
   const [photoUrl, setPhotoUrl] = useState('');
 
-  // Extended Specialist fields
   const [selectedLanguages, setSelectedLanguages] = useState<('RU' | 'RO' | 'EN' | 'UA')[]>(['RU']);
   const [selectedDistricts, setSelectedDistricts] = useState<string[]>([]);
   const [servicesInput, setServicesInput] = useState('');
   const [phone, setPhone] = useState('');
-  // NEW (TZ §7): portfolio / social links — shown to moderator during review
   const [portfolioLinks, setPortfolioLinks] = useState('');
 
-  // Carpooling fields
   const [departureDate, setDepartureDate] = useState('');
   const [departureTime, setDepartureTime] = useState('');
   const [origin, setOrigin] = useState('');
@@ -128,8 +125,6 @@ export default function AddListingPage() {
       origin: isCarpooling && origin ? origin : null,
       destination: isCarpooling && destination ? destination : null,
       is_featured: false,
-
-      // MVP fields
       languages: selectedLanguages,
       districts: selectedDistricts,
       services: servicesInput.split(',').map((s) => s.trim()).filter(Boolean),
@@ -138,7 +133,6 @@ export default function AddListingPage() {
       promotion_level: 'free' as const,
       promotion_until: null,
       rejection_reason: null,
-
       created_at: new Date().toISOString(),
     };
 
@@ -150,12 +144,12 @@ export default function AddListingPage() {
 
   return (
     <div className="px-4 py-5 space-y-5 animate-fade-in pb-16">
-      <h2 className="text-lg font-display font-bold text-white">{t('add_listing.title')}</h2>
+      <h2 className="text-lg font-display font-bold text-foreground">{t('add_listing.title')}</h2>
 
       <form onSubmit={handleSubmit} className="space-y-5">
         {/* Category */}
         <div className="space-y-1.5">
-          <label htmlFor="category" className="text-xs text-white/50 font-bold uppercase tracking-wider">{t('add_listing.category_label')}</label>
+          <label htmlFor="category" className="text-xs text-muted font-bold uppercase tracking-wider">{t('add_listing.category_label')}</label>
           <select
             id="category"
             name="category"
@@ -175,7 +169,7 @@ export default function AddListingPage() {
 
         {/* Title */}
         <div className="space-y-1.5">
-          <label htmlFor="title" className="text-xs text-white/50 font-bold uppercase tracking-wider">{t('add_listing.name_label')}</label>
+          <label htmlFor="title" className="text-xs text-muted font-bold uppercase tracking-wider">{t('add_listing.name_label')}</label>
           <input
             id="title"
             name="title"
@@ -191,7 +185,7 @@ export default function AddListingPage() {
 
         {/* Description */}
         <div className="space-y-1.5">
-          <label htmlFor="description" className="text-xs text-white/50 font-bold uppercase tracking-wider">{t('add_listing.description_label')}</label>
+          <label htmlFor="description" className="text-xs text-muted font-bold uppercase tracking-wider">{t('add_listing.description_label')}</label>
           <textarea
             id="description"
             name="description"
@@ -208,7 +202,7 @@ export default function AddListingPage() {
         {/* Price + Currency */}
         <div className="grid grid-cols-3 gap-2">
           <div className="col-span-2 space-y-1.5">
-            <label htmlFor="price" className="text-xs text-white/50 font-bold uppercase tracking-wider">{t('add_listing.price_label')}</label>
+            <label htmlFor="price" className="text-xs text-muted font-bold uppercase tracking-wider">{t('add_listing.price_label')}</label>
             <input
               id="price"
               name="price"
@@ -222,14 +216,14 @@ export default function AddListingPage() {
             />
           </div>
           <div className="space-y-1.5">
-            <label className="text-xs text-white/50 font-bold uppercase tracking-wider">{t('add_listing.currency_label')}</label>
+            <label className="text-xs text-muted font-bold uppercase tracking-wider">{t('add_listing.currency_label')}</label>
             <div className="flex gap-1">
               {(['RON', 'EUR', 'UAH'] as const).map((cur) => (
                 <button
                   key={cur}
                   type="button"
                   onClick={() => setCurrency(cur)}
-                  className={cn('ui-chip flex-1 py-3', currency === cur && 'ui-chip--active text-amber')}
+                  className={cn('ui-chip flex-1 py-3', currency === cur && 'ui-chip--active')}
                 >
                   {cur}
                 </button>
@@ -238,19 +232,19 @@ export default function AddListingPage() {
           </div>
         </div>
 
-        {/* Extended Fields for Specialists (Non-Carpooling) */}
+        {/* Extended Fields for Specialists */}
         {!isCarpooling && (
-          <div className="space-y-4 pt-3 border-t border-glass-border">
-            <h3 className="text-xs font-bold text-royal-light uppercase tracking-wider flex items-center gap-1.5">
+          <div className="space-y-4 pt-3 border-t border-black/7">
+            <h3 className="text-xs font-bold text-muted uppercase tracking-wider flex items-center gap-1.5">
               <Map size={14} />
-              Дополнительные поля MVP
+              Додаткові поля спеціаліста
             </h3>
 
             {/* Languages */}
             <div className="space-y-1.5">
-              <label className="text-[11px] text-white/50 font-bold uppercase tracking-wider flex items-center gap-1">
+              <label className="text-[11px] text-muted font-bold uppercase tracking-wider flex items-center gap-1">
                 <Languages size={12} />
-                Разговорные языки
+                Розмовні мови
               </label>
               <div className="flex gap-2">
                 {LANGUAGES.map((lang) => {
@@ -262,7 +256,7 @@ export default function AddListingPage() {
                       onClick={() => handleLanguageToggle(lang)}
                       className={cn(
                         'ui-chip py-2 flex-1 text-center',
-                        active && 'ui-chip--active text-royal-light'
+                        active && 'ui-chip--active'
                       )}
                     >
                       {lang}
@@ -274,16 +268,16 @@ export default function AddListingPage() {
 
             {/* Service Tags */}
             <div className="space-y-1.5">
-              <label htmlFor="services" className="text-[11px] text-white/50 font-bold uppercase tracking-wider flex items-center gap-1">
+              <label htmlFor="services" className="text-[11px] text-muted font-bold uppercase tracking-wider flex items-center gap-1">
                 <HelpCircle size={12} />
-                Предоставляемые услуги (через запятую)
+                Послуги (через кому)
               </label>
               <input
                 id="services"
                 type="text"
                 value={servicesInput}
                 onChange={(e) => setServicesInput(e.target.value)}
-                placeholder="напр.: Стрижка, Окрашивание, Укладка"
+                placeholder="напр.: Стрижка, Фарбування, Укладка"
                 className="input-glass py-3 text-sm"
                 autoComplete="off"
               />
@@ -291,9 +285,9 @@ export default function AddListingPage() {
 
             {/* Phone Number */}
             <div className="space-y-1.5">
-              <label htmlFor="phone" className="text-[11px] text-white/50 font-bold uppercase tracking-wider flex items-center gap-1">
+              <label htmlFor="phone" className="text-[11px] text-muted font-bold uppercase tracking-wider flex items-center gap-1">
                 <Phone size={12} />
-                Контактный телефон (необязательно)
+                Контактний телефон (необов'язково)
               </label>
               <input
                 id="phone"
@@ -306,11 +300,11 @@ export default function AddListingPage() {
               />
             </div>
 
-            {/* NEW (TZ §7): Portfolio / social links */}
+            {/* Portfolio / social links */}
             <div className="space-y-1.5">
-              <label className="text-[11px] text-white/50 font-bold uppercase tracking-wider flex items-center gap-1">
+              <label className="text-[11px] text-muted font-bold uppercase tracking-wider flex items-center gap-1">
                 <Link size={12} />
-                Соцсети / Портфолио (необязательно)
+                Соцмережі / Портфоліо (необов'язково)
               </label>
               <textarea
                 value={portfolioLinks}
@@ -319,14 +313,14 @@ export default function AddListingPage() {
                 rows={2}
                 className="input-glass py-2 text-xs resize-none"
               />
-              <p className="text-[10px] text-white/25">Видны только модератору при проверке.</p>
+              <p className="text-[10px] text-black/25">Видно тільки модератору при перевірці.</p>
             </div>
 
             {/* Districts of Brasov */}
             <div className="space-y-1.5">
-              <label className="text-[11px] text-white/50 font-bold uppercase tracking-wider block">Районы работы (Брашов)</label>
-              <p className="text-[10px] text-white/30">Выберите районы, где вы оказываете услуги:</p>
-              <div className="flex flex-wrap gap-1.5 max-h-[160px] overflow-y-auto p-2 bg-obsidian-900/50 rounded-xl border border-glass-border">
+              <label className="text-[11px] text-muted font-bold uppercase tracking-wider block">Райони роботи (Брашов)</label>
+              <p className="text-[10px] text-black/30">Оберіть райони, де ви надаєте послуги:</p>
+              <div className="flex flex-wrap gap-1.5 max-h-[160px] overflow-y-auto p-2 bg-black/3 rounded-xl border border-black/7">
                 {DISTRICTS.map((dist) => {
                   const active = selectedDistricts.includes(dist);
                   return (
@@ -337,11 +331,11 @@ export default function AddListingPage() {
                       className={cn(
                         'px-2.5 py-1.5 rounded-lg border text-[10px] font-medium transition-all duration-200',
                         active
-                          ? 'bg-royal/20 text-royal-light border-royal/40'
-                          : 'bg-obsidian-800/40 text-white/50 border-glass-border hover:bg-glass-hover hover:text-white'
+                          ? 'bg-black text-white border-black'
+                          : 'bg-white text-black/50 border-black/10 hover:bg-black/5 hover:text-black'
                       )}
                     >
-                      {dist === 'Out of Town / Delivery' ? 'Выезд по городу' : dist}
+                      {dist === 'Out of Town / Delivery' ? 'Виїзд по місту' : dist}
                     </button>
                   );
                 })}
@@ -352,13 +346,12 @@ export default function AddListingPage() {
 
         {/* Photos */}
         <div className="space-y-2">
-          <label className="text-xs text-white/50 font-bold uppercase tracking-wider">{t('add_listing.photos_label')}</label>
+          <label className="text-xs text-muted font-bold uppercase tracking-wider">{t('add_listing.photos_label')}</label>
 
-          {/* Photo previews */}
           {photos.length > 0 && (
             <div className="flex gap-2 overflow-x-auto pb-2">
               {photos.map((url, i) => (
-                <div key={i} className="relative shrink-0 w-20 h-20 rounded-xl overflow-hidden border border-glass-border">
+                <div key={i} className="relative shrink-0 w-20 h-20 rounded-xl overflow-hidden border border-black/10">
                   <img src={url} alt="" className="w-full h-full object-cover" />
                   <button
                     type="button"
@@ -379,7 +372,7 @@ export default function AddListingPage() {
                 type="file"
                 accept="image/*"
                 onChange={handleFileUpload}
-                className="text-xs text-white/50"
+                className="text-xs text-muted"
               />
               <div className="flex gap-2">
                 <input
@@ -388,7 +381,7 @@ export default function AddListingPage() {
                   type="url"
                   value={photoUrl}
                   onChange={(e) => setPhotoUrl(e.target.value)}
-                  placeholder="Или ссылка: https://…"
+                  placeholder="Або посилання: https://…"
                   className="input-glass py-2 text-xs flex-1"
                   autoComplete="off"
                 />
@@ -396,7 +389,7 @@ export default function AddListingPage() {
                   type="button"
                   onClick={addPhotoUrl}
                   aria-label={t('add_listing.photos_add')}
-                  className="px-3 py-2 rounded-xl bg-royal/20 text-royal-light border border-royal/30 hover:bg-royal/30 transition-colors"
+                  className="px-3 py-2 rounded-xl bg-black/6 text-black/60 border border-black/10 hover:bg-black/10 transition-colors"
                 >
                   <ImagePlus size={16} />
                 </button>
@@ -407,7 +400,7 @@ export default function AddListingPage() {
 
         {/* Telegram username */}
         <div className="space-y-1.5">
-          <label htmlFor="telegram" className="text-xs text-white/50 font-bold uppercase tracking-wider">{t('add_listing.telegram_label')}</label>
+          <label htmlFor="telegram" className="text-xs text-muted font-bold uppercase tracking-wider">{t('add_listing.telegram_label')}</label>
           <input
             id="telegram"
             name="telegram"
@@ -424,9 +417,9 @@ export default function AddListingPage() {
 
         {/* Address */}
         <div className="space-y-1.5">
-          <label htmlFor="address" className="text-xs text-white/50 font-bold uppercase tracking-wider flex items-center gap-1.5">
+          <label htmlFor="address" className="text-xs text-muted font-bold uppercase tracking-wider flex items-center gap-1.5">
             <MapPin size={12} />
-            {t('add_listing.address_label')} (офис / адрес)
+            {t('add_listing.address_label')} (офіс / адреса)
           </label>
           <input
             id="address"
@@ -443,13 +436,13 @@ export default function AddListingPage() {
         {/* Carpooling fields */}
         {isCarpooling && (
           <div className="glass-panel p-4 space-y-3">
-            <p className="text-xs text-violet-400 font-semibold uppercase tracking-wider flex items-center gap-1.5">
+            <p className="text-xs text-muted font-semibold uppercase tracking-wider flex items-center gap-1.5">
               <Car size={14} />
               {t('carpooling.title')}
             </p>
             <div className="grid grid-cols-2 gap-2">
               <div className="space-y-1">
-                <label className="text-[10px] text-white/40">{t('carpooling.date_label')}</label>
+                <label className="text-[10px] text-black/40">{t('carpooling.date_label')}</label>
                 <input
                   type="date"
                   value={departureDate}
@@ -458,7 +451,7 @@ export default function AddListingPage() {
                 />
               </div>
               <div className="space-y-1">
-                <label className="text-[10px] text-white/40">{t('carpooling.time_label')}</label>
+                <label className="text-[10px] text-black/40">{t('carpooling.time_label')}</label>
                 <input
                   type="time"
                   value={departureTime}
@@ -467,7 +460,7 @@ export default function AddListingPage() {
                 />
               </div>
               <div className="space-y-1">
-                <label className="text-[10px] text-white/40">{t('carpooling.origin_label')}</label>
+                <label className="text-[10px] text-black/40">{t('carpooling.origin_label')}</label>
                 <input
                   type="text"
                   value={origin}
@@ -477,7 +470,7 @@ export default function AddListingPage() {
                 />
               </div>
               <div className="space-y-1">
-                <label className="text-[10px] text-white/40">{t('carpooling.destination_label')}</label>
+                <label className="text-[10px] text-black/40">{t('carpooling.destination_label')}</label>
                 <input
                   type="text"
                   value={destination}
@@ -495,7 +488,7 @@ export default function AddListingPage() {
           type="submit"
           disabled={submitting || !title || !description || !categoryId || !telegramUsername}
           className={cn(
-            'btn-primary w-full flex items-center justify-center gap-2 py-3.5 shadow-blue-glow font-bold',
+            'btn-primary w-full flex items-center justify-center gap-2 py-3.5 font-bold',
             (submitting || !title || !description || !categoryId) && 'opacity-50 cursor-not-allowed'
           )}
         >

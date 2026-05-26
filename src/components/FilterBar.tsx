@@ -61,7 +61,7 @@ export default function FilterBar() {
             <option value="price_asc">{t('filter.sort_price_asc')}</option>
             <option value="price_desc">{t('filter.sort_price_desc')}</option>
           </select>
-          <ChevronDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 pointer-events-none" />
+          <ChevronDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted pointer-events-none" />
         </div>
 
         {/* Filter toggle */}
@@ -75,7 +75,7 @@ export default function FilterBar() {
         >
           <SlidersHorizontal size={14} />
           {hasActiveFilters && (
-            <div className="w-1.5 h-1.5 rounded-full bg-amber animate-pulse" />
+            <div className="w-1.5 h-1.5 rounded-full bg-[#c9a84c] animate-pulse" />
           )}
         </button>
 
@@ -83,7 +83,7 @@ export default function FilterBar() {
           <button
             type="button"
             onClick={resetFilters}
-            className="ui-btn-icon w-10 h-10 text-white/40 hover:text-crimson-light hover:border-crimson/30"
+            className="ui-btn-icon w-10 h-10 text-muted hover:text-red-500 hover:border-red-200"
           >
             <RotateCcw size={14} />
           </button>
@@ -95,7 +95,7 @@ export default function FilterBar() {
         <div className="glass-panel p-4 space-y-4 animate-slide-up max-h-[75vh] overflow-y-auto">
           {/* Price filters */}
           <div className="space-y-1.5">
-            <label className="text-[10px] text-white/40 font-semibold uppercase tracking-wider">{t('listing.price')}</label>
+            <label className="text-[10px] text-black/40 font-semibold uppercase tracking-wider">{t('listing.price')}</label>
             <div className="grid grid-cols-2 gap-2">
               <input
                 type="number"
@@ -128,7 +128,7 @@ export default function FilterBar() {
                 }
                 className={cn(
                   'ui-chip py-1.5 flex-1',
-                  filters.currency === cur && 'ui-chip--active text-amber border-amber/40'
+                  filters.currency === cur && 'ui-chip--active'
                 )}
               >
                 {cur}
@@ -137,9 +137,9 @@ export default function FilterBar() {
           </div>
 
           {/* Languages filter */}
-          <div className="space-y-1.5 pt-2 border-t border-glass-border">
-            <p className="text-[10px] text-white/40 font-semibold uppercase tracking-wider flex items-center gap-1.5">
-              <Languages size={12} className="text-royal-light" />
+          <div className="space-y-1.5 pt-2 border-t border-black/7">
+            <p className="text-[10px] text-black/40 font-semibold uppercase tracking-wider flex items-center gap-1.5">
+              <Languages size={12} className="text-muted" />
               {t('common.language')}
             </p>
             <div className="flex gap-2">
@@ -152,7 +152,7 @@ export default function FilterBar() {
                     onClick={() => toggleLanguage(lang)}
                     className={cn(
                       'ui-chip py-1.5 flex-1 text-center',
-                      active && 'ui-chip--active text-royal-light'
+                      active && 'ui-chip--active'
                     )}
                   >
                     {lang}
@@ -163,9 +163,9 @@ export default function FilterBar() {
           </div>
 
           {/* Rating filter */}
-          <div className="space-y-1.5 pt-2 border-t border-glass-border">
-            <p className="text-[10px] text-white/40 font-semibold uppercase tracking-wider flex items-center gap-1.5">
-              <Star size={12} className="text-amber" />
+          <div className="space-y-1.5 pt-2 border-t border-black/7">
+            <p className="text-[10px] text-black/40 font-semibold uppercase tracking-wider flex items-center gap-1.5">
+              <Star size={12} className="text-[#c9a84c]" />
               {t('cabinet.rating')}
             </p>
             <div className="flex gap-2">
@@ -180,7 +180,7 @@ export default function FilterBar() {
                     }
                     className={cn(
                       'ui-chip py-1.5 flex-1',
-                      active && 'ui-chip--active text-amber border-amber/40'
+                      active && 'ui-chip--active'
                     )}
                   >
                     ★ {rating}+
@@ -191,12 +191,12 @@ export default function FilterBar() {
           </div>
 
           {/* Districts filter */}
-          <div className="space-y-1.5 pt-2 border-t border-glass-border">
-            <p className="text-[10px] text-white/40 font-semibold uppercase tracking-wider flex items-center gap-1.5">
-              <Map size={12} className="text-royal-light" />
+          <div className="space-y-1.5 pt-2 border-t border-black/7">
+            <p className="text-[10px] text-black/40 font-semibold uppercase tracking-wider flex items-center gap-1.5">
+              <Map size={12} className="text-muted" />
               Район Брашова
             </p>
-            <div className="flex flex-wrap gap-1.5 max-h-[140px] overflow-y-auto p-1 bg-obsidian-900/50 rounded-xl border border-glass-border">
+            <div className="flex flex-wrap gap-1.5 max-h-[140px] overflow-y-auto p-2 bg-black/3 rounded-xl border border-black/7">
               {DISTRICTS.map((dist) => {
                 const active = filters.districts?.includes(dist);
                 return (
@@ -207,11 +207,11 @@ export default function FilterBar() {
                     className={cn(
                       'px-2.5 py-1.5 rounded-lg border text-[10px] font-medium transition-all duration-200',
                       active
-                        ? 'bg-royal/20 text-royal-light border-royal/40'
-                        : 'bg-obsidian-800/40 text-white/50 border-glass-border hover:bg-glass-hover hover:text-white'
+                        ? 'bg-black text-white border-black'
+                        : 'bg-white text-black/50 border-black/10 hover:bg-black/5 hover:text-black'
                     )}
                   >
-                    {dist === 'Out of Town / Delivery' ? 'Выезд по городу' : dist}
+                    {dist === 'Out of Town / Delivery' ? 'Виїзд по місту' : dist}
                   </button>
                 );
               })}
@@ -220,8 +220,8 @@ export default function FilterBar() {
 
           {/* Carpooling-specific filters */}
           {isCarpooling && (
-            <div className="space-y-2 pt-2 border-t border-glass-border">
-              <p className="text-[11px] text-violet-400 font-semibold uppercase tracking-wider flex items-center gap-1.5">
+            <div className="space-y-2 pt-2 border-t border-black/7">
+              <p className="text-[11px] text-muted font-semibold uppercase tracking-wider flex items-center gap-1.5">
                 <Car size={14} />
                 {t('carpooling.title')}
               </p>
