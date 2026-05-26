@@ -78,7 +78,7 @@ export default function Header() {
                 <Globe size={13} className="text-muted" />
               </button>
               {showLangMenu && (
-                <div className="absolute right-0 top-full mt-2 bg-white border border-black/8 rounded-2xl shadow-card p-1.5 min-w-[168px] z-[60] animate-fade-in">
+                <div className="absolute right-0 top-full mt-2 bg-white/90 backdrop-blur-md border border-black/8 rounded-2xl shadow-card p-1.5 min-w-[168px] z-[60] animate-fade-in">
                   {LANG_OPTIONS.map((lang) => (
                     <button
                       key={lang.code}
