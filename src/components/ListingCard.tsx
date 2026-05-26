@@ -87,7 +87,7 @@ export default function ListingCard({ listing }: Props) {
               {listing.title}
             </h3>
             {listing.is_verified && (
-              <CheckCircle size={14} className="text-emerald-400 shrink-0 mt-0.5" title="Verified Specialist" />
+              <CheckCircle size={14} className="text-emerald-400 shrink-0 mt-0.5" />
             )}
           </div>
 

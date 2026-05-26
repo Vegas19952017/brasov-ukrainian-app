@@ -137,6 +137,7 @@ export default function AddListingPage() {
       is_verified: false,
       promotion_level: 'free' as const,
       promotion_until: null,
+      rejection_reason: null,
 
       created_at: new Date().toISOString(),
     };
