@@ -114,7 +114,7 @@ export default function ChatPage() {
                     'max-w-[85%] rounded-2xl px-3.5 py-2.5 space-y-1.5',
                     isMine
                       ? 'bg-black text-white rounded-br-md'
-                      : 'bg-white border border-black/8 rounded-bl-md shadow-card'
+                      : 'bg-white/85 backdrop-blur-sm border border-black/8 rounded-bl-md shadow-card'
                   )}
                 >
                   {!isMine && (
@@ -170,7 +170,7 @@ export default function ChatPage() {
         <div ref={bottomRef} />
       </div>
 
-      <div className="px-4 py-3 border-t border-black/7 bg-white safe-bottom">
+      <div className="px-4 py-3 border-t border-black/7 bg-white/90 backdrop-blur-md safe-bottom">
         <div className="flex gap-2 items-end">
           <input
             ref={fileRef}

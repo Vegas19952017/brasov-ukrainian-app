@@ -110,7 +110,7 @@ export default function CabinetPage() {
             'flex-1 py-2.5 rounded-xl text-xs font-bold border transition-all duration-200 flex items-center justify-center gap-1.5',
             activeTab === 'listings'
               ? 'bg-black text-white border-black'
-              : 'bg-white text-muted border-black/10 hover:border-black/20'
+              : 'bg-white/80 backdrop-blur-sm text-muted border-black/10 hover:border-black/20'
           )}
         >
           <FileText size={13} />
@@ -131,7 +131,7 @@ export default function CabinetPage() {
             'flex-1 py-2.5 rounded-xl text-xs font-bold border transition-all duration-200 flex items-center justify-center gap-1.5',
             activeTab === 'reviews'
               ? 'bg-black text-white border-black'
-              : 'bg-white text-muted border-black/10 hover:border-black/20'
+              : 'bg-white/80 backdrop-blur-sm text-muted border-black/10 hover:border-black/20'
           )}
         >
           <MessageSquare size={13} />
